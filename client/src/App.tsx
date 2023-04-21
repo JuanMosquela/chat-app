@@ -1,7 +1,11 @@
-import Router from "./Router";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return <Router />;
+  return (
+    <div className="  ">
+      <Outlet />
+    </div>
+  );
 }
 
 export default App;

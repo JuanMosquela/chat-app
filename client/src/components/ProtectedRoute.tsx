@@ -1,14 +1,21 @@
-import Chat from "../pages/Chat";
-import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { selectAuth } from "../redux/slices/auth.slice";
 
 const ProtectedRoute = () => {
-  const token = true;
-  const navigate = useNavigate();
+  const { token } = useSelector(selectAuth);
+
   const location = useLocation();
-  return token ? (
-    <Outlet />
-  ) : (
-    navigate("/login", { state: { from: location }, replace: true })
+
+  return (
+    <>
+      {token ? (
+        <Outlet />
+      ) : (
+        <Navigate to="/login" state={{ from: location }} replace />
+      )}
+    </>
   );
 };
+
 export default ProtectedRoute;
