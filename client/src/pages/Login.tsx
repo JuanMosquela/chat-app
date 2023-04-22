@@ -121,10 +121,9 @@ const Login = () => {
           </div>
 
           <Loader />
-
-          <p className="w-full text-center my-3">or</p>
-          <GoogleLoginButtom />
         </form>
+        <p className="w-full text-center my-3">or</p>
+        <GoogleLoginButtom />
         <div className="flex  justify-center gap-2 text-sm font-semibold pt-10 text-center ">
           <p className="text-letter mb-4 font-semibold">
             need an account?
