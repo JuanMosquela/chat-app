@@ -11,7 +11,10 @@ const app = express();
 const server = http.createServer(app);
 
 const corsOptions = {
-  origin: "https://chat-app-git-main-juanmosquela.vercel.app",
+  origin: [
+    "http://localhost:3000",
+    "https://chat-app-git-main-juanmosquela.vercel.app",
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
 app.use(cors());

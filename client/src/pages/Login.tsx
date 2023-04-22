@@ -65,12 +65,8 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-[100vh] bg-blue  ">
-      <div className="flex  rounded-lg overflow-hidden relative   shadow-md ">
-        <form
-          className="w-[400px] bg-white py-4 px-5 space-y-5 "
-          method="post"
-          onSubmit={handleSubmit}
-        >
+      <div className="bg-white px-4 space-y-4 rounded-lg overflow-hidden relative   shadow-md ">
+        <form className="w-[400px]    " method="post" onSubmit={handleSubmit}>
           <Link
             className="block  text-center py-1  font-bold uppercase text-sm md:text-md lg:text-3xl text-black mb-10  "
             to="/"
@@ -126,22 +122,21 @@ const Login = () => {
 
           <Loader />
 
-          <p className="w-full text-center">or</p>
+          <p className="w-full text-center my-3">or</p>
           <GoogleLoginButtom />
-
-          <div className="flex justify-center gap-2 text-sm font-semibold pt-10 text-center ">
-            <p className="text-letter  font-semibold">
-              need an account?
-              <br />
-            </p>
-            <Link
-              className="text-blue text-md font-bold capitalize"
-              to="/register"
-            >
-              sign up
-            </Link>
-          </div>
         </form>
+        <div className="flex  justify-center gap-2 text-sm font-semibold pt-10 text-center ">
+          <p className="text-letter mb-4 font-semibold">
+            need an account?
+            <br />
+          </p>
+          <Link
+            className="text-blue text-md font-bold capitalize"
+            to="/register"
+          >
+            sign up
+          </Link>
+        </div>
       </div>
     </div>
   );

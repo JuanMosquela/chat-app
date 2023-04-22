@@ -103,11 +103,11 @@ const GoogleLoginButtom = () => {
     //   />
     // </div>
     <button
-      className="w-full flex justify-center items-center gap-2 rounded-sm shadow-md p-2 "
+      className="w-full flex justify-center items-center gap-2 rounded-sm shadow-md p-4 "
       onClick={() => loginWithGoogle()}
     >
-      <FcGoogle />
-      Sign in with google
+      <FcGoogle className="text-xl" />
+      <span className="text-md">Sign in with google</span>
     </button>
   );
 };
