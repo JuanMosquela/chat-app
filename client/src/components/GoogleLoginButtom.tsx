@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/slices/auth.slice";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { gapi } from "gapi-script";
+import { FcGoogle } from "react-icons/fc";
 
 declare const window: Window;
 
@@ -47,32 +49,66 @@ const GoogleLoginButtom = () => {
   //     size: "large",
   //   });
   // }, []);
-  return (
-    <GoogleLogin
-      onSuccess={(response) => {
-        console.log(response.credential);
-        const body = { id_token: response.credential };
 
-        fetch("http://localhost:5000/api/auth/google", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (response) => {
+      const auth = gapi.auth2.getAuthInstance();
+      const id_token = auth.currentUser.get().getAuthResponse().id_token;
+      console.log(id_token);
+
+      fetch("http://localhost:5000/api/auth/google", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(id_token),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          const { token } = response;
+          dispatch(setCredentials(response));
         })
-          .then((response) => response.json())
-          .then((response) => {
-            console.log(response);
-            const { token } = response;
-            dispatch(setCredentials(response));
-          })
 
-          .catch((err) => console.warn(err));
-      }}
-      onError={() => {
-        console.log("Login Failed");
-      }}
-    />
+        .catch((err) => console.warn(err));
+    },
+  });
+
+  return (
+    // <div className="flex justify-center">
+    //   <GoogleLogin
+    //     onSuccess={(response) => {
+    //       console.log(response.credential);
+    //       const body = { id_token: response.credential };
+
+    //       fetch("http://localhost:5000/api/auth/google", {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(body),
+    //       })
+    //         .then((response) => response.json())
+    //         .then((response) => {
+    //           console.log(response);
+    //           const { token } = response;
+    //           dispatch(setCredentials(response));
+    //         })
+
+    //         .catch((err) => console.warn(err));
+    //     }}
+    //     onError={() => {
+    //       console.log("Login Failed");
+    //     }}
+    //   />
+    // </div>
+    <button
+      className="w-full flex justify-center items-center gap-2 rounded-sm shadow-md p-2 "
+      onClick={() => loginWithGoogle()}
+    >
+      <FcGoogle />
+      Sign in with google
+    </button>
   );
 };
 export default GoogleLoginButtom;

@@ -125,13 +125,9 @@ const Login = () => {
           </div>
 
           <Loader />
-          <div className=" text-center">
-            <p className="text-sm font-semibold   mb-2">
-              or signin with google
-            </p>
 
-            <GoogleLoginButtom />
-          </div>
+          <p className="w-full text-center">or</p>
+          <GoogleLoginButtom />
 
           <div className="flex justify-center gap-2 text-sm font-semibold pt-10 text-center ">
             <p className="text-letter  font-semibold">
