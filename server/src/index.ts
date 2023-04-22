@@ -10,6 +10,10 @@ import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);
 
+const corsOptions = {
+  origin: "https://chat-app-git-main-juanmosquela.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+};
 app.use(cors());
 
 // Configurar el servidor de Socket.IO
