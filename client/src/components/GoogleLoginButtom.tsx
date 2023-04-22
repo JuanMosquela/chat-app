@@ -1,8 +1,11 @@
 /* eslint-disable no-undef */ // Ignorar el error de que "google" no está definido
 // Aquí puedes colocar el código que accede a la API de Google
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/slices/auth.slice";
 
 const GoogleLoginButtom = () => {
+  const dispatch = useDispatch();
   function handleCallbackResponse(response: any) {
     const body = { id_token: response.credential };
     fetch("http://localhost:5000/api/auth/google", {
@@ -16,8 +19,7 @@ const GoogleLoginButtom = () => {
       .then((response) => {
         console.log(response);
         const { token } = response;
-        localStorage.setItem("token", token);
-        localStorage.setItem("email", response.user.email);
+        dispatch(setCredentials(response));
       })
 
       .catch((err) => console.warn(err));
