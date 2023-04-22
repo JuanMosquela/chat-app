@@ -10,19 +10,10 @@ import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);
 
-const corsOptions = {
-  origin: [
-    "http://localhost:3000",
-    "https://chat-app-git-main-juanmosquela.vercel.app",
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-};
 app.use(cors());
 
 // Configurar el servidor de Socket.IO
-const io = new Server(server, {
-  cors: corsOptions,
-});
+const io = new Server(server);
 
 const PORT = process.env.PORT || 5000;
 
