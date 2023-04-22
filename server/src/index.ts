@@ -10,11 +10,7 @@ import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Configurar el servidor de Socket.IO
 const io = new Server(server, {
