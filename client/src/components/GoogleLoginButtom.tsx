@@ -56,7 +56,7 @@ const GoogleLoginButtom = () => {
       const id_token = auth.currentUser.get().getAuthResponse().id_token;
       console.log(id_token);
 
-      fetch("http://localhost:5000/api/auth/google", {
+      fetch("https://chat-app-api-mba6.onrender.com/api/auth/google", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
