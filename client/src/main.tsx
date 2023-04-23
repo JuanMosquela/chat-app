@@ -12,8 +12,8 @@ import Register from "./pages/Register";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <BrowserRouter>
-    <GoogleOAuthProvider clientId="525882776971-5d7vpp4ptsl894bvp8mer96mr3sv64j8.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
+    <BrowserRouter>
       <Provider store={store}>
         <Routes>
           <Route path="/" element={<App />}>
@@ -26,6 +26,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           </Route>
         </Routes>
       </Provider>
-    </GoogleOAuthProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </GoogleOAuthProvider>
 );

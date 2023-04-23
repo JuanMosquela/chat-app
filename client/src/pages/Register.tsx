@@ -60,8 +60,8 @@ const Register = () => {
     });
 
   return (
-    <div className="flex justify-center items-center min-h-[100vh] bg-blue  ">
-      <div className="flex  rounded-lg overflow-hidden relative   shadow-md ">
+    <div className="flex justify-center items-center min-h-[100vh] bg-blue px-2 ">
+      <div className="flex  rounded-lg overflow-hidden relative   shadow-md  ">
         <form
           className="w-[400px] bg-white py-4 px-5 space-y-5 "
           method="post"
@@ -137,22 +137,15 @@ const Register = () => {
           </div>
 
           <Loader />
-          <div className=" text-center">
-            <p className="text-sm font-semibold   mb-2">
-              or signup with google
-            </p>
-
-            <GoogleLoginButtom />
-          </div>
 
           <div className="flex justify-center gap-2 text-sm font-semibold pt-10 text-center ">
             <p className="text-letter  font-semibold">
-              already have an account?
+              Already have an account?
               <br />
             </p>
             <Link
               className="text-blue text-md font-bold capitalize"
-              to="/register"
+              to="/login"
             >
               sign in
             </Link>

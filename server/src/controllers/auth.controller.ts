@@ -81,9 +81,10 @@ const login = async (req: Request, res: Response) => {
 
 const googleLogin = async (req: Request, res: Response) => {
   const { id_token } = req.body;
+  console.log(id_token);
+  console.log("esa fue la dta");
 
   interface TokenPayload {
-    name?: string;
     picture?: string;
     email?: string;
     username?: string;
@@ -92,13 +93,19 @@ const googleLogin = async (req: Request, res: Response) => {
   try {
     // desestructuramos el token y consegimos datos
 
-    let { email, picture, username } = (await verifyGoogle(
-      id_token
-    )) as TokenPayload;
+    // let { email, picture, username } = (await verifyGoogle(
+    //   id_token
+    // )) as TokenPayload;
+
+    const { email, name, picture } = id_token;
+
+    console.log(email);
 
     // corroboramos si existe en la base de datos
 
     const exist = await User.findOne({ email });
+
+    console.log(exist);
 
     // si no existe lo creamos
 
@@ -106,7 +113,7 @@ const googleLogin = async (req: Request, res: Response) => {
       const user = new User({
         email,
         picture,
-        username,
+        username: name,
         password: ":P",
         google: true,
       });
@@ -138,6 +145,8 @@ const googleLogin = async (req: Request, res: Response) => {
       });
     }
 
+    console.log(exist.id);
+
     let token = await generateToken(exist.id);
     if (!token) {
       return res.send({
@@ -152,7 +161,7 @@ const googleLogin = async (req: Request, res: Response) => {
       token,
     });
   } catch (error: any) {
-    console.log(error.message);
+    console.log(error);
     res.send({
       message: "La validacion con google no fue posible intentelo despues",
       valid: false,

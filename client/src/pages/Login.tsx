@@ -64,9 +64,9 @@ const Login = () => {
     });
 
   return (
-    <div className="flex justify-center items-center min-h-[100vh] bg-blue  ">
-      <div className="bg-white px-4 space-y-4 rounded-lg overflow-hidden relative   shadow-md ">
-        <form className="w-[400px]    " method="post" onSubmit={handleSubmit}>
+    <div className="flex justify-center items-center min-h-[100vh] bg-blue px-2  ">
+      <div className="bg-white w-[400px] px-4 space-y-4 rounded-lg overflow-hidden relative   shadow-md ">
+        <form className="   " method="post" onSubmit={handleSubmit}>
           <Link
             className="block  text-center py-1  font-bold uppercase text-sm md:text-md lg:text-3xl text-black mb-10  "
             to="/"

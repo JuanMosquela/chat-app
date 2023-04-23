@@ -13,7 +13,11 @@ const server = http.createServer(app);
 app.use(cors());
 
 // Configurar el servidor de Socket.IO
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 const PORT = process.env.PORT || 5000;
 
