@@ -573,6 +573,10 @@ video {
   height: 60px;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .min-h-\[100vh\] {
   min-height: 100vh;
 }
@@ -587,14 +591,6 @@ video {
 
 .w-full {
   width: 100%;
-}
-
-.min-w-\[400px\] {
-  min-width: 400px;
-}
-
-.max-w-\[400px\] {
-  max-width: 400px;
 }
 
 @keyframes spin {
@@ -659,6 +655,11 @@ video {
 .bg-gray {
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+}
+
+.bg-red {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 0 51 / var(--tw-bg-opacity));
 }
 
 .bg-white {
