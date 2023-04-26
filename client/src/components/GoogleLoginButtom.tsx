@@ -1,13 +1,9 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/slices/auth.slice";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
-import { gapi } from "gapi-script";
+import { useGoogleLogin } from "@react-oauth/google";
+
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
-
-declare const window: Window;
 
 const GoogleLoginButtom = () => {
   const dispatch = useDispatch();
@@ -23,7 +19,6 @@ const GoogleLoginButtom = () => {
             },
           }
         );
-        console.log(res.data);
 
         const { data } = await axios.post(
           import.meta.env.DEV

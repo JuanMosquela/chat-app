@@ -1,26 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-interface AuthState {
-  username: any;
-  picture: string;
+interface UserState {
+  username: string;
+  picture?: string;
   email: string;
   token: string;
 }
 
-const initialState: AuthState = {
-  username: localStorage.getItem("username")
-    ? JSON.parse(localStorage.getItem("username") || "")
-    : "",
-  picture: localStorage.getItem("picture")
-    ? JSON.parse(localStorage.getItem("picture") || "")
-    : "",
-  email: localStorage.getItem("email")
-    ? JSON.parse(localStorage.getItem("email") || "")
-    : "",
-  token: localStorage.getItem("token")
-    ? JSON.parse(localStorage.getItem("token") || "")
-    : "",
+function getItem(key: string): string {
+  const value = localStorage.getItem(key);
+  return value ? JSON.parse(value) : "";
+}
+
+const initialState: UserState = {
+  username: getItem("user"),
+  picture: getItem("picture"),
+  email: getItem("email"),
+  token: getItem("token"),
 };
 
 const authSlice = createSlice({
@@ -30,7 +27,7 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       const { user, token } = action.payload;
       state.username = user.username;
-      state.picture = user.picture;
+
       state.email = user.email;
       state.token = token;
 
@@ -38,6 +35,12 @@ const authSlice = createSlice({
       localStorage.setItem("email", JSON.stringify(state.email));
       localStorage.setItem("picture", JSON.stringify(state.picture));
       localStorage.setItem("token", JSON.stringify(state.token));
+
+      if (user.picture) {
+        state.picture = user.picture;
+
+        localStorage.setItem("picture", JSON.stringify(state.picture));
+      }
     },
 
     logout: (state) => {

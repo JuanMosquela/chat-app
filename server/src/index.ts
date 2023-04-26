@@ -5,7 +5,10 @@ import fileUpload from "express-fileupload";
 import { genericRouter } from "./routes/routes";
 import connectDatabase from "./config/db.config";
 import http from "http";
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
+import { socketController } from "./controllers/socket.controller";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
+import verifyToken from "./middlewares/verify-token";
 
 const app = express();
 const server = http.createServer(app);
@@ -33,15 +36,18 @@ app.use(
 
 connectDatabase();
 
-// app.use("/", (req, res) => {
-//   res.send("hola mundo");
-// });
-
 app.use("/api", genericRouter);
 
-io.on("connect", (socket) => {
-  console.log("cliente conectado " + socket.id);
-});
+io.on(
+  "connect",
+  (
+    socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
+  ) => {
+    (async () => {
+      await socketController(socket, io);
+    })().catch((error) => console.error(error));
+  }
+);
 
 server.listen(PORT, () => {
   console.log(`servidor levantado en el puerto ${PORT}`);

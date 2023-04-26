@@ -26,12 +26,9 @@ const Login = () => {
 
   const [signIn, { data, isLoading, error, isSuccess }] = useSingInMutation();
 
-  console.log(data, error);
-
   const onSubmit = async () => {
     try {
       await signIn(values);
-      console.log(values);
     } catch (error) {
       console.log(error);
     }

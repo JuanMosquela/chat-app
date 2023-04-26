@@ -81,33 +81,11 @@ const login = async (req: Request, res: Response) => {
 
 const googleLogin = async (req: Request, res: Response) => {
   const { id_token } = req.body;
-  console.log(id_token);
-  console.log("esa fue la dta");
-
-  interface TokenPayload {
-    picture?: string;
-    email?: string;
-    username?: string;
-  }
 
   try {
-    // desestructuramos el token y consegimos datos
-
-    // let { email, picture, username } = (await verifyGoogle(
-    //   id_token
-    // )) as TokenPayload;
-
     const { email, name, picture } = id_token;
 
-    console.log(email);
-
-    // corroboramos si existe en la base de datos
-
     const exist = await User.findOne({ email });
-
-    console.log(exist);
-
-    // si no existe lo creamos
 
     if (!exist) {
       const user = new User({
@@ -134,18 +112,11 @@ const googleLogin = async (req: Request, res: Response) => {
       //   enviar(update,"bienvenida")
     }
 
-    // si existe el usuario
-    // const update: any = await User.findOne({ email: exist.email }).select(
-    //   "-password"
-    // );
-
     if (exist?.state == false) {
       return res.status(401).json({
         msg: "This user was disabled",
       });
     }
-
-    console.log(exist.id);
 
     let token = await generateToken(exist.id);
     if (!token) {
