@@ -8,7 +8,6 @@ import cloudinary from "../config/cloudinary.config";
 const register = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
-    // const { file }: any = req.files;
 
     const exist = await User.findOne({ email });
 
@@ -25,15 +24,6 @@ const register = async (req: Request, res: Response) => {
       email,
       password: hashed_password,
     });
-
-    // if (file) {
-    //   const { tempFilePath } = file;
-    //   const { secure_url } = await cloudinary.uploader.upload(tempFilePath, {
-    //     folder: "chat-app/users",
-    //   });
-
-    //   user.picture = secure_url;
-    // }
 
     user.save();
 

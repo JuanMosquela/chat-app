@@ -3,15 +3,11 @@ import { verifySocketToken } from "../utils/verify-token";
 import User from "../models/user.model";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
-let users = {};
+let users = [];
 let messages = [];
 
 const getMessages = () => {
   return messages;
-};
-
-const getUsers = () => {
-  return Object.values(users);
 };
 
 const saveMessage = (id, username, message, picture) => {
@@ -23,15 +19,23 @@ const saveMessage = (id, username, message, picture) => {
     picture,
   };
   messages.unshift(newMessage);
-  console.log(messages[0]);
 };
 
-const connectUser = (user) => {
-  users[user.id] = user;
+const addUser = (user) => {
+  console.log(user);
+  const userExist = users.find((item) => {
+    return user.id === item.id;
+  });
+
+  if (!userExist) {
+    users.push(user);
+  }
 };
 
-const disconnectUser = (id: any) => {
-  delete users[id];
+const removeUser = (userId) => {
+  users = users.filter((item) => {
+    return userId !== item.id;
+  });
 };
 
 const socketController = async (
@@ -44,28 +48,30 @@ const socketController = async (
     return socket.disconnect();
   }
 
+  addUser(user);
+  console.log(users);
+
   console.log(`Se conecto el usuario ${user.username}`);
 
-  socket.on("send-message", (message) => {
-    saveMessage(user.id, user.username, message, user.picture);
+  // connectUser(user);
 
-    socket.broadcast.emit("send-message", messages[0]);
+  socket.emit("load_messages", messages);
+
+  socket.emit("online_users", users);
+
+  socket.on("send_message", (message) => {
+    saveMessage(user.id, user.username, message, user.picture);
+    console.log(messages);
+
+    io.emit("recive_message", messages[0]);
   });
 
-  // connectUser(user);
-  // io.emit("usuarios-activos", getUsers());
-  // io.emit("recibir-mensaje", messages);
-
-  // socket.on("enviar-mensaje", (message) => {
-  //   console.log(message);
-  //   saveMessage(user.id, user.username, message, user.picture);
-  //   socket.emit("recibir-mensaje", messages);
-  // });
-
-  socket.on("disconnect", () => {
-    console.log(socket.client + "usuario desconectado");
-    disconnectUser(user.id);
-    io.emit("usuarios-activos", getUsers);
+  socket.on("user-disconnected", () => {
+    console.log("se desconecto el user " + user.username);
+    removeUser(user.id);
+    console.log(users);
+    io.emit("online_users", users);
+    socket.disconnect();
   });
 };
 

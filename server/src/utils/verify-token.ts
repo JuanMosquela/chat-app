@@ -4,8 +4,6 @@ import { RequestUserId, IPayload } from "../types";
 
 import User from "../models/user.model";
 
-console.log(process.env.JWT_SECRET_KEY);
-
 const verifySocketToken = async (token) => {
   try {
     if (token.length < 10) {

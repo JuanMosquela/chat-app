@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface UserState {
+  id: string;
   username: string;
   picture?: string;
   email: string;
@@ -14,6 +15,7 @@ function getItem(key: string): string {
 }
 
 const initialState: UserState = {
+  id: getItem("id"),
   username: getItem("user"),
   picture: getItem("picture"),
   email: getItem("email"),
@@ -26,11 +28,13 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       const { user, token } = action.payload;
+      state.id = user._id;
       state.username = user.username;
 
       state.email = user.email;
       state.token = token;
 
+      localStorage.setItem("id", JSON.stringify(state.id));
       localStorage.setItem("user", JSON.stringify(state.username));
       localStorage.setItem("email", JSON.stringify(state.email));
       localStorage.setItem("picture", JSON.stringify(state.picture));

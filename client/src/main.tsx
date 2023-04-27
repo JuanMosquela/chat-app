@@ -10,6 +10,7 @@ import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import Register from "./pages/Register";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import SocketProvider from "./context/SocketProvider";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
@@ -18,7 +19,14 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route element={<ProtectedRoute />}>
-              <Route index element={<Chat />} />
+              <Route
+                index
+                element={
+                  <SocketProvider>
+                    <Chat />
+                  </SocketProvider>
+                }
+              />
             </Route>
 
             <Route path="/login" element={<Login />} />
