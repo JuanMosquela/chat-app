@@ -5,20 +5,30 @@ import { selectAuth } from "../redux/slices/auth.slice";
 
 interface MessageBoxProps {
   handleMessage: any;
+  message: string;
+  setMessage: any;
 }
 
-const MessageBox = ({ handleMessage }: MessageBoxProps) => {
-  const [message, setMessage] = useState("");
-
+const MessageBox = ({
+  handleMessage,
+  message,
+  setMessage,
+}: MessageBoxProps) => {
   return (
-    <form className="bg-gray flex justify-around items-center px-6 py-4 rounded-md ">
+    <form
+      onSubmit={(e) => handleMessage(e)}
+      className="bg-white flex  w-full items-center px-6 py-4 rounded-md "
+    >
       <input
         className="rounded-md w-full outline-none text-md"
         type="text"
         placeholder="Enviar mensaje ..."
+        value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <RiSendPlane2Fill onClick={() => handleMessage(message)} />
+      <button type="submit">
+        <RiSendPlane2Fill className="text-4xl" />
+      </button>
     </form>
   );
 };

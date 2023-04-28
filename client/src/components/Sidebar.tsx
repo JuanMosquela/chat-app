@@ -20,7 +20,7 @@ const Sidebar = () => {
   };
 
   return (
-    <section className="w-64 px-2">
+    <section className="w-1/4 px-2 bg-blue">
       <div className="flex justify-between items-center">
         <h2 className=" font-bold text-xl flex justify-center items-center py-2">
           Online users

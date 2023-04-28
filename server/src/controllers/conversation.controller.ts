@@ -1,11 +1,17 @@
 import { Request, Response } from "express";
 import Conversation from "../models/conversation.model";
+import User from "../models/user.model";
 
 const createConversation = async (req: Request, res: Response) => {
   const { from, to } = req.body;
   try {
+    const [sender, receiver] = await Promise.all([
+      await User.findById(from),
+      await User.findById(to),
+    ]);
+
     const conversation = new Conversation({
-      members: [from, to],
+      members: [sender, receiver],
     });
 
     conversation.save();
@@ -23,7 +29,9 @@ const getConversation = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const conversation = await Conversation.find({ members: { $in: [id] } });
+    const conversation = await Conversation.find({
+      members: { $in: [id] },
+    }).populate("members");
 
     if (!conversation) {
       res.status(401).send({ msg: `No conversation with this ${id}` });

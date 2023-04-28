@@ -2,9 +2,13 @@ import { useState, useContext } from "react";
 import EmptyPicture from "./EmptyPicture";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import { SocketContext } from "../context/SocketProvider";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/slices/auth.slice";
+import MessageBox from "./MessageBox";
 
 const Conversation = () => {
   const { socket, messages } = useContext(SocketContext);
+  const { id } = useSelector(selectAuth);
 
   const [message, setMessage] = useState("");
 
@@ -15,13 +19,15 @@ const Conversation = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between bg-blue w-full p-4">
-      <div>
+    <div className="flex  flex-col  min-h-screen bg-gray  p-4">
+      <div className="flex-grow ">
         <ul>
           {messages.map((item: any, index: number) => (
             <li
               key={index}
-              className="flex items-center gap-2   p-2 rounded-md bg-gray mb-2"
+              className={`flex   items-center  gap-2  py-2 px-4 rounded-md  mb-2 w-fit ${
+                id === item.id ? "ml-auto bg-blue" : " bg-gray"
+              }`}
             >
               {item.picture ? (
                 <img
@@ -41,19 +47,11 @@ const Conversation = () => {
           ))}
         </ul>
       </div>
-      <form
-        onSubmit={handleMessage}
-        className="bg-gray flex justify-around items-center px-6 py-4 rounded-md "
-      >
-        <input
-          className="rounded-md w-full outline-none text-md"
-          type="text"
-          value={message}
-          placeholder="Enviar mensaje ..."
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <RiSendPlane2Fill />
-      </form>
+      <MessageBox
+        handleMessage={handleMessage}
+        message={message}
+        setMessage={setMessage}
+      />
     </div>
   );
 };
