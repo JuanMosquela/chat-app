@@ -55,9 +55,9 @@ const socketController = async (
 
   // connectUser(user);
 
-  socket.emit("load_messages", messages);
+  io.emit("load_messages", messages);
 
-  socket.emit("online_users", users);
+  io.emit("online_users", users);
 
   socket.on("send_message", (message) => {
     saveMessage(user.id, user.username, message, user.picture);
