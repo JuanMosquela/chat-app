@@ -3,9 +3,11 @@ import EmptyPicture from "./EmptyPicture";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectAuth } from "../redux/slices/auth.slice";
 import { googleLogout } from "@react-oauth/google";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SocketContext } from "../context/SocketProvider";
 import noProfile from "../assets/user.png";
+import MenuButton from "./MenuButton";
+import { BiSearchAlt2 } from "react-icons/bi";
 
 interface SideBarProps {
   users: any[];
@@ -17,6 +19,12 @@ const Sidebar = ({ users }: SideBarProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [selectedChat, setSelectedChat] = useState(null);
+
+  const handleSelected = (id: string) => {
+    setSelectedChat(id);
+  };
+
   const logOut = () => {
     googleLogout();
     socket?.emit("user-disconnected");
@@ -26,33 +34,38 @@ const Sidebar = ({ users }: SideBarProps) => {
   };
 
   return (
-    <section className="w-1/4 px-2 bg-[#1B202D]">
-      <div className="flex justify-between items-center">
-        <div className="p-2">
+    <section className="w-1/4 bg-[#111B21] px-2">
+      <div className="flex justify-between items-center bg-[#222E35] mb-2">
+        <div className="px-2 py-4  ">
           <img
-            className="rounded-full w-10 "
+            className="rounded-full w-8 "
             src={picture ? picture : noProfile}
           />
         </div>
-        <button className=" text-white px-2" onClick={logOut}>
-          logout
-        </button>
+        <MenuButton />
       </div>
-      <ul className=" p-2 flex-grox ">
+      <div className="flex justify-between items-center bg-[#222E35] rounded-sm p-2 mb-2">
+        <BiSearchAlt2 className="text-white" />
+        <input
+          type="text"
+          placeholder="Search for a chat"
+          className="w-full ml-6  bg-[#222E35]"
+        />
+      </div>
+      <ul className=" flex-grox ">
         {users?.map((user: any) => (
           <li
             key={user._id}
-            className="flex items-center gap-2   p-2 rounded-md bg-[#292F3F] text-white hover:bg-[#3D4354]"
+            onClick={() => handleSelected(user._id)}
+            className={`flex items-center gap-2   p-2 rounded-md bg-[#111B21] text-white hover:bg-[#222E35] ${
+              user._id === selectedChat && "bg-[#2A3942] hover:bg-[#2A3942]"
+            }`}
           >
-            {user.picture ? (
-              <img
-                className="rounded-full w-10"
-                src={user?.picture}
-                alt={user.username}
-              />
-            ) : (
-              <EmptyPicture char={user.username[0]} />
-            )}
+            <img
+              className="rounded-full w-10"
+              src={user?.picture ? user.picture : noProfile}
+              alt={user.username}
+            />
 
             <h3>{user.username}</h3>
           </li>

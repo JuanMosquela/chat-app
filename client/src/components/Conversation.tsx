@@ -19,7 +19,7 @@ const Conversation = () => {
   };
 
   return (
-    <div className="flex w-full flex-col  min-h-screen bg-[#1B202D]  p-4">
+    <div className="flex w-full flex-col  min-h-screen bg-[#10191F]  p-4">
       <div className="flex-grow ">
         <ul>
           {messages.map((item: any, index: number) => (
