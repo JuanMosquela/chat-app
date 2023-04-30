@@ -19,7 +19,9 @@ const Sidebar = ({ users }: SideBarProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [selectedChat, setSelectedChat] = useState(null);
+  const [selectedChat, setSelectedChat] = useState<string | undefined>(
+    undefined
+  );
 
   const handleSelected = (id: string) => {
     setSelectedChat(id);
@@ -57,7 +59,7 @@ const Sidebar = ({ users }: SideBarProps) => {
           <li
             key={user._id}
             onClick={() => handleSelected(user._id)}
-            className={`flex items-center gap-2   p-2 rounded-md bg-[#111B21] text-white hover:bg-[#222E35] ${
+            className={`flex items-center gap-4  p-2 rounded-md bg-[#111B21] text-white hover:bg-[#222E35] ${
               user._id === selectedChat && "bg-[#2A3942] hover:bg-[#2A3942]"
             }`}
           >
