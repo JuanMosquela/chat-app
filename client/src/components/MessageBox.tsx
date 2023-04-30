@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RiSendPlane2Fill } from "react-icons/ri";
+import { AiOutlineSend } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
 
@@ -17,17 +17,20 @@ const MessageBox = ({
   return (
     <form
       onSubmit={(e) => handleMessage(e)}
-      className="bg-white flex  w-full items-center px-6 py-4 rounded-md "
+      className="bg-[#3D4354] flex  w-full items-center px-2 rounded-md "
     >
       <input
-        className="rounded-md w-full outline-none text-md"
+        className="rounded-md ml-2 w-full outline-none text-md bg-[#3D4354] text-letter"
         type="text"
         placeholder="Enviar mensaje ..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <button type="submit">
-        <RiSendPlane2Fill className="text-4xl" />
+      <button
+        type="submit"
+        className="w-[50px] h-[50px] flex justify-center items-center rounded-md"
+      >
+        <AiOutlineSend className="text-xl text-white" />
       </button>
     </form>
   );
