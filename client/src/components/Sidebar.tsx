@@ -34,7 +34,7 @@ const Sidebar = ({ users }: SideBarProps) => {
             src={picture ? picture : noProfile}
           />
         </div>
-        <button className="bg-red text-white px-2" onClick={logOut}>
+        <button className=" text-white px-2" onClick={logOut}>
           logout
         </button>
       </div>
