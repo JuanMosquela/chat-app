@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import Message from "../models/message.model";
+import User from "../models/user.model";
 
 const createMessage = async (req: Request, res: Response) => {
   const { conversationId, from, message } = req.body;
   try {
+    const { picture } = await User.findById(from).select("picture");
+    console.log(picture);
+
     const newMessage = new Message({
       conversationId,
       from,
       message,
+      picture,
     });
 
     await newMessage.save();
@@ -23,6 +28,7 @@ const createMessage = async (req: Request, res: Response) => {
 
 const getMessages = async (req: Request, res: Response) => {
   const { conversationId } = req.params;
+  console.log(conversationId);
   try {
     const findMessages = await Message.find({ conversationId });
 

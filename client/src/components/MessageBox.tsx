@@ -23,7 +23,7 @@ const MessageBox = ({
         <BsEmojiLaughing className="text-2xl" />
         <FiPaperclip className="text-2xl" />
         <input
-          className="rounded-md ml-2 w-full outline-none text-md bg-[#222E35] text-letter"
+          className="rounded-md ml-2 w-full outline-none text-md bg-[#222E35] text-white"
           type="text"
           placeholder="Enviar mensaje ..."
           value={message}

@@ -4,6 +4,8 @@ import User from "../models/user.model";
 
 const createConversation = async (req: Request, res: Response) => {
   const { from, to } = req.body;
+  console.log(from);
+
   try {
     const [sender, receiver] = await Promise.all([
       await User.findById(from),

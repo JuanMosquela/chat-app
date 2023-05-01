@@ -11,6 +11,13 @@ const messageSchema = new Schema(
     message: {
       type: String,
     },
+    picture: {
+      type: String,
+    },
+    time: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   { timestamps: true }
 );

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import EmptyPicture from "./EmptyPicture";
+
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectAuth } from "../redux/slices/auth.slice";
 import { googleLogout } from "@react-oauth/google";
@@ -21,11 +21,11 @@ const Sidebar = ({ conversations }: SideBarProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log(conversations);
-
   const [selectedChat, setSelectedChat] = useState<string | undefined>(
     undefined
   );
+
+  console.log(conversations);
 
   const handleSelected = (id: string) => {
     setSelectedChat(id);
@@ -47,7 +47,7 @@ const Sidebar = ({ conversations }: SideBarProps) => {
         <input
           type="text"
           placeholder="Search for a chat"
-          className="w-full ml-6  bg-[#222E35]"
+          className="w-full ml-6 outline-none text-white  bg-[#222E35]"
         />
       </div>
       <ul className=" flex-grox ">

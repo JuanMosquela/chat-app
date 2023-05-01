@@ -8,7 +8,6 @@ import http from "http";
 import { Server, Socket } from "socket.io";
 import { socketController } from "./controllers/socket.controller";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import verifyToken from "./middlewares/verify-token";
 
 const app = express();
 const server = http.createServer(app);
