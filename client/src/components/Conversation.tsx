@@ -1,57 +1,41 @@
-import { useState, useContext } from "react";
-import EmptyPicture from "./EmptyPicture";
-import { RiSendPlane2Fill } from "react-icons/ri";
-import { SocketContext } from "../context/SocketProvider";
-import { useSelector } from "react-redux";
-import { selectAuth } from "../redux/slices/auth.slice";
-import MessageBox from "./MessageBox";
+import { useEffect, useState } from "react";
+import noProfile from "../assets/user.png";
 
-const Conversation = () => {
-  const { socket, messages } = useContext(SocketContext);
-  const { id } = useSelector(selectAuth);
+interface ConversationProps {
+  chat: any;
+  currentUserId: string;
+  handleSelected: any;
+  selectedChat: any;
+}
 
-  const [message, setMessage] = useState("");
-
-  const handleMessage = (e: any) => {
-    e.preventDefault();
-    socket?.emit("send_message", message);
-    setMessage("");
-  };
-
+const Conversation = ({
+  chat,
+  currentUserId,
+  handleSelected,
+  selectedChat,
+}: ConversationProps) => {
   return (
-    <div className="flex w-full flex-col  min-h-screen bg-[#10191F]  p-4">
-      <div className="flex-grow ">
-        <ul>
-          {messages.map((item: any, index: number) => (
+    <div>
+      {chat?.members.map(
+        (user: any) =>
+          user._id !== currentUserId && (
             <li
-              key={index}
-              className={`flex   items-center  gap-2  py-2 px-4 rounded-md  mb-2 w-fit ${
-                id === item.id ? "ml-auto bg-blue" : " bg-gray"
+              key={user._id}
+              onClick={() => handleSelected(user._id)}
+              className={`flex items-center gap-4  p-2 rounded-md bg-[#111B21] text-white hover:bg-[#222E35] ${
+                user._id === selectedChat && "bg-[#2A3942] hover:bg-[#2A3942]"
               }`}
             >
-              {item.picture ? (
-                <img
-                  className="rounded-full w-10"
-                  src={item?.picture}
-                  alt={item.username}
-                />
-              ) : (
-                <EmptyPicture char={item.username[0]} />
-              )}
+              <img
+                className="rounded-full w-10"
+                src={user?.picture ? user.picture : noProfile}
+                alt={user.username}
+              />
 
-              <div>
-                <h3>{item.username}</h3>
-                <p>{item.message}</p>
-              </div>
+              <h3>{user.username}</h3>
             </li>
-          ))}
-        </ul>
-      </div>
-      <MessageBox
-        handleMessage={handleMessage}
-        message={message}
-        setMessage={setMessage}
-      />
+          )
+      )}
     </div>
   );
 };

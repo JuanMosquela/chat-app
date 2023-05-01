@@ -8,16 +8,20 @@ import { SocketContext } from "../context/SocketProvider";
 import noProfile from "../assets/user.png";
 import MenuButton from "./MenuButton";
 import { BiSearchAlt2 } from "react-icons/bi";
+import Chat from "./Chat";
+import Conversation from "./Conversation";
 
 interface SideBarProps {
-  users: any[];
+  conversations: any[];
 }
 
-const Sidebar = ({ users }: SideBarProps) => {
+const Sidebar = ({ conversations }: SideBarProps) => {
   const { socket } = useContext(SocketContext);
-  const { picture } = useSelector(selectAuth);
+  const { picture, id } = useSelector(selectAuth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  console.log(conversations);
 
   const [selectedChat, setSelectedChat] = useState<string | undefined>(
     undefined
@@ -25,14 +29,6 @@ const Sidebar = ({ users }: SideBarProps) => {
 
   const handleSelected = (id: string) => {
     setSelectedChat(id);
-  };
-
-  const logOut = () => {
-    googleLogout();
-    socket?.emit("user-disconnected");
-    localStorage.clear();
-    navigate("/login");
-    dispatch(logout());
   };
 
   return (
@@ -55,23 +51,16 @@ const Sidebar = ({ users }: SideBarProps) => {
         />
       </div>
       <ul className=" flex-grox ">
-        {users?.map((user: any) => (
-          <li
-            key={user._id}
-            onClick={() => handleSelected(user._id)}
-            className={`flex items-center gap-4  p-2 rounded-md bg-[#111B21] text-white hover:bg-[#222E35] ${
-              user._id === selectedChat && "bg-[#2A3942] hover:bg-[#2A3942]"
-            }`}
-          >
-            <img
-              className="rounded-full w-10"
-              src={user?.picture ? user.picture : noProfile}
-              alt={user.username}
+        {conversations &&
+          conversations.map((chat) => (
+            <Conversation
+              key={chat._id}
+              chat={chat}
+              currentUserId={id}
+              handleSelected={handleSelected}
+              selectedChat={selectedChat}
             />
-
-            <h3>{user.username}</h3>
-          </li>
-        ))}
+          ))}
       </ul>
     </section>
   );

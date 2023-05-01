@@ -22,7 +22,7 @@ const GoogleLoginButtom = () => {
 
         const { data } = await axios.post(
           import.meta.env.DEV
-            ? "http://localhost:8080/api/auth/google"
+            ? "http://localhost:5000/api/auth/google"
             : "https://chat-app-api-mba6.onrender.com/api/auth/google",
           {
             id_token: res.data,

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "../dist/output.css";
-import Chat from "./pages/Chat";
+import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import { store } from "./redux/store";
@@ -18,9 +18,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route element={<ProtectedRoute />}>
-              <Route index element={<Chat />} />
+              <Route index element={<Home />} />
             </Route>
-
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
