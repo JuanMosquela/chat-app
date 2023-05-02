@@ -1,18 +1,23 @@
 import emptyApi from "./emptyApi";
 
-export const extendedMessagesApi = emptyApi.injectEndpoints({
-  endpoints: (builder) => ({
-    // createConversation: builder.mutation({
-    //   query: (body) => ({
-    //     url: "/conversation",
-    //     method: "POST",
-    //     body,
-    //   }),
-    // }),
-    getMessages: builder.query({
-      query: (id) => `/message/${id}`,
+export const extendedMessagesApi = emptyApi
+  .enhanceEndpoints({ addTagTypes: ["Message"] })
+  .injectEndpoints({
+    endpoints: (builder) => ({
+      createMessage: builder.mutation({
+        query: (body) => ({
+          url: "/message",
+          method: "POST",
+          body,
+        }),
+        invalidatesTags: ["Message"],
+      }),
+      getMessages: builder.query({
+        query: (id) => `/message/${id}`,
+        providesTags: ["Message"],
+      }),
     }),
-  }),
-});
+  });
 
-export const { useGetMessagesQuery } = extendedMessagesApi;
+export const { useGetMessagesQuery, useCreateMessageMutation } =
+  extendedMessagesApi;

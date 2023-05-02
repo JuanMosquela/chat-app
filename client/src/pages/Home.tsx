@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import Chat from "../components/Chat";
 import { useGetConversationQuery } from "../redux/api/conversationApi";
 import { useEffect } from "react";
+import SocketProvider from "../context/SocketProvider";
 
 const Home = () => {
   const { id } = useSelector(selectAuth);
@@ -12,10 +13,12 @@ const Home = () => {
   const { data } = useGetConversationQuery(id);
 
   return (
-    <div className="flex min-h-screen  ">
-      <Sidebar conversations={data} />
-      <Chat />
-    </div>
+    <SocketProvider>
+      <div className="flex min-h-screen  ">
+        <Sidebar conversations={data} />
+        <Chat />
+      </div>
+    </SocketProvider>
   );
 };
 export default Home;

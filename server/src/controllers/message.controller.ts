@@ -3,10 +3,10 @@ import Message from "../models/message.model";
 import User from "../models/user.model";
 
 const createMessage = async (req: Request, res: Response) => {
+  console.log("intenta guardar mensaje");
   const { conversationId, from, message } = req.body;
   try {
     const { picture } = await User.findById(from).select("picture");
-    console.log(picture);
 
     const newMessage = new Message({
       conversationId,

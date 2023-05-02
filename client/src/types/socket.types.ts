@@ -4,6 +4,7 @@ export type SocketContextType = {
   socket: Socket | null;
   users: any;
   messages: any;
+  setMessages: any;
 };
 
 export type SocketProviderProps = {

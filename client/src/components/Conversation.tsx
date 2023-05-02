@@ -19,7 +19,7 @@ const Conversation = ({
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div className="border border-y-white/20">
       {chat?.members.map(
         (user: any) =>
           user._id !== currentUserId && (

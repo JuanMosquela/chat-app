@@ -3,7 +3,7 @@ import { verifySocketToken } from "../utils/verify-token";
 import User from "../models/user.model";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
-let users = [];
+let onlineUsers = [];
 let messages = [];
 
 const getMessages = () => {
@@ -21,20 +21,18 @@ const saveMessage = (id, username, message, picture) => {
   messages.unshift(newMessage);
 };
 
-const addUser = (user) => {
-  console.log(user);
-  const userExist = users.find((item) => {
-    return user.id === item.id;
-  });
-
-  if (!userExist) {
-    users.push(user);
+const addUser = (currentUser: any, socket) => {
+  if (!onlineUsers.some((user) => user.id === currentUser.id)) {
+    onlineUsers.push({
+      user: currentUser,
+      socketId: socket.id,
+    });
   }
 };
 
-const removeUser = (userId) => {
-  users = users.filter((item) => {
-    return userId !== item.id;
+const removeUser = (socketId: string) => {
+  onlineUsers = onlineUsers.filter((user) => {
+    return user.socketId !== socketId;
   });
 };
 
@@ -48,29 +46,23 @@ const socketController = async (
     return socket.disconnect();
   }
 
-  addUser(user);
-  console.log(users);
-
+  addUser(user, socket);
+  console.log(onlineUsers);
   console.log(`Se conecto el usuario ${user.username}`);
-
-  // connectUser(user);
 
   io.emit("load_messages", messages);
 
-  io.emit("online_users", users);
+  io.emit("online_users", onlineUsers);
 
   socket.on("send_message", (message) => {
-    saveMessage(user.id, user.username, message, user.picture);
-    console.log(messages);
-
-    io.emit("recive_message", messages[0]);
+    socket.broadcast.emit("recive_message", message);
   });
 
   socket.on("user-disconnected", () => {
     console.log("se desconecto el user " + user.username);
-    removeUser(user.id);
-    console.log(users);
-    io.emit("online_users", users);
+    removeUser(socket.id);
+    console.log(onlineUsers);
+    io.emit("online_users", onlineUsers);
     socket.disconnect();
   });
 };

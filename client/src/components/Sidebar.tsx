@@ -25,14 +25,12 @@ const Sidebar = ({ conversations }: SideBarProps) => {
     undefined
   );
 
-  console.log(conversations);
-
   const handleSelected = (id: string) => {
     setSelectedChat(id);
   };
 
   return (
-    <section className="w-1/4 bg-[#111B21] px-2">
+    <section className="w-1/4 bg-[#111B21] px-2 border border-x-white/20">
       <div className="flex justify-between items-center bg-[#222E35] mb-2">
         <div className="px-2 py-4  ">
           <img
@@ -50,7 +48,7 @@ const Sidebar = ({ conversations }: SideBarProps) => {
           className="w-full ml-6 outline-none text-white  bg-[#222E35]"
         />
       </div>
-      <ul className=" flex-grox ">
+      <ul className="  ">
         {conversations &&
           conversations.map((chat) => (
             <Conversation
