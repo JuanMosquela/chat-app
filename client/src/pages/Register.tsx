@@ -54,14 +54,15 @@ const Register = () => {
         username: "",
         email: "",
         password: "",
+        passwordConfirmation: "",
       },
       validationSchema: registerSchemas,
       onSubmit,
     });
 
   return (
-    <div className="flex justify-center items-center min-h-[100vh] bg-blue px-2 ">
-      <div className="flex  rounded-lg overflow-hidden relative   shadow-md  ">
+    <div className="flex justify-center items-center min-h-[100vh] px-2 ">
+      <div className="flex  rounded-lg overflow-hidden relative ">
         <form
           className="w-[400px] bg-white py-4 px-5 space-y-5 "
           method="post"
@@ -73,10 +74,10 @@ const Register = () => {
           >
             {/* <img className="mb-6" src={logo} alt="" /> */}
           </Link>
-          <h2 className="text-letter text-2xl mb-8 font-semibold">Sign Up</h2>
+          <h2 className=" text-2xl mb-8 font-semibold">Sign Up</h2>
           <div className=" mb-6 ">
             <input
-              className=" w-full p-3 text-md outline-none bg-gray   text-letter rounded-md  "
+              className=" w-full p-3 text-md outline-none bg-gray  rounded-md  "
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.username}
@@ -92,7 +93,7 @@ const Register = () => {
           </div>
           <div className=" mb-6 ">
             <input
-              className=" w-full p-3 text-md outline-none bg-gray   text-letter rounded-md  "
+              className=" w-full p-3 text-md outline-none bg-gray  rounded-md  "
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
@@ -109,7 +110,7 @@ const Register = () => {
           <div className=" mb-6 ">
             <div className="flex px-2 justify-between bg-gray hover:bg-gray/80 focus:bg-white items-center">
               <input
-                className=" w-full p-3 text-md outline-none bg-gray   text-letter rounded-md  "
+                className=" w-full p-3 text-md outline-none bg-gray   rounded-md  "
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
@@ -135,11 +136,40 @@ const Register = () => {
               </p>
             )}
           </div>
+          <div className=" mb-6 ">
+            <div className="flex px-2 justify-between bg-gray hover:bg-gray/80 focus:bg-white items-center">
+              <input
+                className=" w-full p-3 text-md outline-none bg-gray   rounded-md  "
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.passwordConfirmation}
+                type={visible ? "text" : "password"}
+                name="passwordConfirmation"
+                placeholder="Password"
+              />
+              {visible ? (
+                <AiFillEyeInvisible
+                  className="  text-2xl text-dark/90 "
+                  onClick={() => setVisible(!visible)}
+                />
+              ) : (
+                <AiFillEye
+                  className=" text-2xl text-dark/90"
+                  onClick={() => setVisible(!visible)}
+                />
+              )}
+            </div>
+            {errors.passwordConfirmation && touched.passwordConfirmation && (
+              <p className="pt-2 ml-2 text-red text-sm font-semibold">
+                {errors.passwordConfirmation}
+              </p>
+            )}
+          </div>
 
           <Loader />
 
           <div className="flex justify-center gap-2 text-sm font-semibold pt-10 text-center ">
-            <p className="text-letter  font-semibold">
+            <p className=" font-semibold">
               Already have an account?
               <br />
             </p>

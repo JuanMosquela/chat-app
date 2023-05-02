@@ -6,21 +6,6 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 let onlineUsers = [];
 let messages = [];
 
-const getMessages = () => {
-  return messages;
-};
-
-const saveMessage = (id, username, message, picture) => {
-  console.log("entra aca");
-  let newMessage = {
-    id,
-    username,
-    message,
-    picture,
-  };
-  messages.unshift(newMessage);
-};
-
 const addUser = (currentUser: any, socket) => {
   if (!onlineUsers.some((user) => user.id === currentUser.id)) {
     onlineUsers.push({
@@ -47,7 +32,7 @@ const socketController = async (
   }
 
   addUser(user, socket);
-  console.log(onlineUsers);
+
   console.log(`Se conecto el usuario ${user.username}`);
 
   io.emit("load_messages", messages);
@@ -55,7 +40,11 @@ const socketController = async (
   io.emit("online_users", onlineUsers);
 
   socket.on("send_message", (message) => {
+    // console.log(message);
+    // console.log(onlineUsers);
     socket.broadcast.emit("recive_message", message);
+
+    // socket.to(onlineUsers) emit("recive_message")
   });
 
   socket.on("user-disconnected", () => {

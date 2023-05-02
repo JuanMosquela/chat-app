@@ -10,6 +10,7 @@ import noPicture from "../assets/user.png";
 import { format } from "timeago.js";
 import { useGetMessagesQuery } from "../redux/api/messagesApi";
 import noProfile from "../assets/user.png";
+import Welcome from "./Welcome";
 
 const Chat = () => {
   const { socket, messages } = useContext(SocketContext);
@@ -20,6 +21,7 @@ const Chat = () => {
   // const { data } = useGetMessagesQuery(currentChat);
 
   // console.log(data);
+  console.log(currentUserChat);
 
   useEffect(() => {
     socket?.on("recive_message", (message) => console.log(message));
@@ -29,10 +31,7 @@ const Chat = () => {
     <div className="flex w-full flex-col  min-h-screen bg-[#10191F] ">
       {currentChat ? (
         <>
-          <div
-            className="bg-[#222E35] flex items-center
-       gap-4 p-4"
-          >
+          <div className="bg-[#222E35] flex items-center gap-4 p-4">
             <img
               className="w-8 rounded-full"
               src={currentPictureChat ? currentPictureChat : noPicture}
@@ -68,7 +67,7 @@ const Chat = () => {
           <MessageBox />
         </>
       ) : (
-        <div>please select a chat ....</div>
+        <Welcome />
       )}
     </div>
   );

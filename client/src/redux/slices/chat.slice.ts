@@ -36,9 +36,15 @@ const chatSlice = createSlice({
         localStorage.setItem("currentPictureChat", JSON.stringify(picture));
       }
     },
+    resetState: (state) => {
+      state.currentChat = "";
+      state.currentUserChat = "";
+      state.currentPictureChat = "";
+      localStorage.clear();
+    },
   },
 });
 
 export const selectChat = (state: RootState) => state.chat;
-export const { setChat } = chatSlice.actions;
+export const { setChat, resetState } = chatSlice.actions;
 export default chatSlice.reducer;

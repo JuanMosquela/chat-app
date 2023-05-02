@@ -16,7 +16,7 @@ const Loader = () => {
     <div>
       <button
         type="submit"
-        className="bg-blue text-white w-full h-[60px] rounded-md"
+        className="bg-[#11887A] hover:bg-[#075B51] text-white w-full h-[60px] rounded-md duration-150"
         onClick={simularPeticion}
       >
         {res ? (

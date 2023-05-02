@@ -61,19 +61,19 @@ const Login = () => {
     });
 
   return (
-    <div className="flex justify-center items-center min-h-[100vh] bg-blue px-2   ">
-      <div className="bg-white w-[400px]  px-4 space-y-4 rounded-lg overflow-hidden relative   shadow-md ">
-        <form className="   " method="post" onSubmit={handleSubmit}>
+    <div className="flex justify-center items-center min-h-[100vh]  px-2   ">
+      <div className="bg-white w-[400px]  px-4 space-y-4 rounded-lg overflow-hidden relative    ">
+        <form method="post" onSubmit={handleSubmit}>
           <Link
             className="block  text-center py-1  font-bold uppercase text-sm md:text-md lg:text-3xl text-black mb-10  "
             to="/"
           >
             {/* <img className="mb-6" src={logo} alt="" /> */}
           </Link>
-          <h2 className="text-letter text-2xl mb-8 font-semibold">Sign In</h2>
+          <h2 className=" text-2xl mb-8 font-semibold">Sign In</h2>
           <div className="relative mb-6 ">
             <input
-              className=" w-full p-3 text-md outline-none bg-gray   text-letter rounded-md  "
+              className=" w-full p-3 text-md outline-none bg-gray    rounded-md  "
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.identifier}
@@ -90,7 +90,7 @@ const Login = () => {
           <div className=" mb-6 ">
             <div className="flex px-2 justify-between bg-gray hover:bg-gray/80 focus:bg-white items-center">
               <input
-                className=" w-full p-3 text-md outline-none bg-gray   text-letter rounded-md  "
+                className=" w-full p-3 text-md outline-none bg-gray rounded-md  "
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
@@ -119,11 +119,15 @@ const Login = () => {
 
           <Loader />
         </form>
-        <p className="w-full text-center my-3">or</p>
+        <div className="relative flex py-5 items-center">
+          <div className="flex-grow border-t border-letter"></div>
+          <span className="flex-shrink mx-4 ">OR</span>
+          <div className="flex-grow border-t border-letter"></div>
+        </div>
         <GoogleLoginButtom />
         <div className="flex  justify-center gap-2 text-sm font-semibold pt-10 text-center ">
-          <p className="text-letter mb-4 font-semibold">
-            need an account?
+          <p className=" mb-4 font-semibold">
+            Dont have an account?
             <br />
           </p>
           <Link

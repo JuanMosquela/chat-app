@@ -41,7 +41,7 @@ const GoogleLoginButtom = () => {
   return (
     <div>
       <button
-        className="w-full flex justify-center items-center gap-2 rounded-sm shadow-md py-4 "
+        className="w-full flex justify-center items-center gap-2 rounded-md border border-letter py-4 "
         onClick={() => login()}
       >
         <FcGoogle className="text-xl" />

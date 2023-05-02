@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/slices/auth.slice";
 import { SocketContext } from "../context/SocketProvider";
+import { resetState } from "../redux/slices/chat.slice";
 
 export default function MenuButton() {
   const { socket } = React.useContext(SocketContext);
@@ -28,9 +29,9 @@ export default function MenuButton() {
   const logOut = () => {
     googleLogout();
     socket?.emit("user-disconnected");
-    localStorage.clear();
-    navigate("/login");
     dispatch(logout());
+    dispatch(resetState());
+    navigate("/login");
   };
 
   const handleClose = (event: Event | React.SyntheticEvent) => {

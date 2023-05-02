@@ -16,4 +16,9 @@ export const registerSchemas = yup.object().shape({
     .min(6, "Password too short")
     .max(50, "Password too long")
     .required("This field is requiered"),
+  passwordConfirmation: yup
+    .string()
+    .test("passwords-match", "Passwords must match", function (value) {
+      return this.parent.password === value;
+    }),
 });
