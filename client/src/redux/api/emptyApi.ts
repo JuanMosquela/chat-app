@@ -4,7 +4,7 @@ import { RootState } from "../store";
 const emptyApi = createApi({
   reducerPath: "emptyApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api",
+    baseUrl: "https://chat-app-api-mba6.onrender.com/api",
 
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
