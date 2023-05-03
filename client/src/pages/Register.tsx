@@ -166,7 +166,7 @@ const Register = () => {
             )}
           </div>
 
-          <Loader />
+          <Loader isLoading={isLoading} />
 
           <div className="flex justify-center gap-2 text-sm font-semibold pt-10 text-center ">
             <p className=" font-semibold">

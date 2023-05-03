@@ -1,25 +1,17 @@
 import { useState } from "react";
 
-const Loader = () => {
-  const [res, setRes] = useState(false);
+interface LoaderProps {
+  isLoading: boolean;
+}
 
-  function simularPeticion() {
-    setRes(true);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(setRes(false));
-      }, 1000);
-    });
-  }
-
+const Loader = ({ isLoading }: LoaderProps) => {
   return (
     <div>
       <button
         type="submit"
         className="bg-[#11887A] hover:bg-[#075B51] text-white w-full h-[60px] rounded-md duration-150"
-        onClick={simularPeticion}
       >
-        {res ? (
+        {isLoading ? (
           <div className="flex justify-center items-center ">
             <svg
               className="mr-3 h-5 w-5 animate-spin text-white"

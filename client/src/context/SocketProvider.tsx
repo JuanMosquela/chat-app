@@ -28,7 +28,7 @@ const SocketProvider = ({ children }: SocketProviderProps) => {
     socketRef.current = io(
       import.meta.env.DEV
         ? "http://localhost:5000"
-        : "https://chat-app-api-mba6.onrender.com/api",
+        : "https://chat-app-api-mba6.onrender.com",
       {
         extraHeaders: {
           "x-token": localStorage.getItem("token") || "",

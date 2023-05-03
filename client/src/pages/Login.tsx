@@ -117,7 +117,7 @@ const Login = () => {
             )}
           </div>
 
-          <Loader />
+          <Loader isLoading={isLoading} />
         </form>
         <div className="relative flex py-5 items-center">
           <div className="flex-grow border-t border-letter"></div>

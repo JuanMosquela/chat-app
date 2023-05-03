@@ -5,7 +5,7 @@ const emptyApi = createApi({
   reducerPath: "emptyApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.DEV
-      ? "http://localhost:5000"
+      ? "http://localhost:5000/api"
       : "https://chat-app-api-mba6.onrender.com/api",
 
     prepareHeaders: (headers, { getState }) => {
