@@ -41,7 +41,9 @@ const SocketProvider = ({ children }: SocketProviderProps) => {
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/api/message/${currentChat}`
+          import.meta.env.DEV
+            ? `http://localhost:5000/api/message/${currentChat}`
+            : `https://chat-app-api-mba6.onrender.com/api/message/${currentChat}`
         );
         setMessages(data);
       } catch (error) {
