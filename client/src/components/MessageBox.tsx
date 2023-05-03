@@ -7,7 +7,6 @@ import { SocketContext } from "../context/SocketProvider";
 import { useSelector } from "react-redux";
 import { selectChat } from "../redux/slices/chat.slice";
 import { selectAuth } from "../redux/slices/auth.slice";
-import { useCreateMessageMutation } from "../redux/api/messagesApi";
 import axios from "axios";
 
 const MessageBox = () => {
@@ -16,15 +15,17 @@ const MessageBox = () => {
   const { currentChat } = useSelector(selectChat);
   const [newMessage, setNewMessage] = useState("");
 
-  const [createMessage, { data }] = useCreateMessageMutation();
-
   const handleChange = (newMessage: string) => {
     setNewMessage(newMessage);
   };
 
   const saveMessage = async (message: any) => {
-    console.log(message);
-    await axios.post("http://localhost:5000/api/message", message);
+    await axios.post(
+      import.meta.env.DEV
+        ? "http://localhost:5000/api"
+        : "https://chat-app-api-mba6.onrender.com/api",
+      message
+    );
   };
 
   function handleOnEnter() {
