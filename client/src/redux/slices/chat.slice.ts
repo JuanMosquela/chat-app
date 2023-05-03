@@ -23,14 +23,18 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     setChat: (state, { payload }) => {
+      console.log(payload);
       const { user, currentChatId } = payload;
       console.log(currentChatId);
       const { username, picture } = user;
-      state.currentChat = currentChatId;
-      state.currentUserChat = username;
+      if (currentChatId) {
+        state.currentChat = currentChatId;
+        state.currentUserChat = username;
 
-      localStorage.setItem("currentChat", JSON.stringify(currentChatId));
-      localStorage.setItem("currentUserChat", JSON.stringify(username));
+        localStorage.setItem("currentChat", JSON.stringify(currentChatId));
+        localStorage.setItem("currentUserChat", JSON.stringify(username));
+      }
+
       if (picture) {
         state.currentPictureChat = picture;
         localStorage.setItem("currentPictureChat", JSON.stringify(picture));

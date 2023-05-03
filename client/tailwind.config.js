@@ -7,10 +7,17 @@ export default {
       gray: "#F5F5F5",
       letter: "#9C9782",
       blue: "#98CAFB",
-      dark: "#041A08",
+      dark: "#111B21",
+      soft_dark: "#222E35",
       white: "#FFF",
+      empty_bg: "#222E35",
     },
-    extend: {},
+    extend: {
+      container: {
+        center: true,
+        padding: "2rem",
+      },
+    },
   },
   plugins: [],
 };

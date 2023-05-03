@@ -3,62 +3,84 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectAuth } from "../redux/slices/auth.slice";
 import { googleLogout } from "@react-oauth/google";
-import { useContext, useState } from "react";
-import { SocketContext } from "../context/SocketProvider";
+import { useState } from "react";
 import noProfile from "../assets/user.png";
 import MenuButton from "./MenuButton";
 import { BiSearchAlt2 } from "react-icons/bi";
-import Chat from "./Chat";
+import { BsFillChatLeftTextFill } from "react-icons/bs";
 import Conversation from "./Conversation";
+import NewChat from "./NewChat";
+import { useGetConversationQuery } from "../redux/api/conversationApi";
+import UserCard from "./UserCard";
 
 interface SideBarProps {
   conversations: any[];
 }
 
-const Sidebar = ({ conversations }: SideBarProps) => {
-  const { socket } = useContext(SocketContext);
-  const { picture, id } = useSelector(selectAuth);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+const Sidebar = () => {
+  const { picture } = useSelector(selectAuth);
   const [selectedChat, setSelectedChat] = useState<string | undefined>(
     undefined
   );
+  const { id } = useSelector(selectAuth);
+  const { data } = useGetConversationQuery(id);
+  const [open, setOpen] = useState(false);
 
   const handleSelected = (id: string) => {
     setSelectedChat(id);
   };
 
+  const handleOpenNewChat = () => {
+    setOpen((prev) => !prev);
+  };
+
   return (
-    <section className="w-1/4 bg-[#111B21] px-2 border border-x-white/20">
-      <div className="flex justify-between items-center bg-[#222E35] mb-2">
+    <section className=" w-[30%] bg-[#111B21] pr-2 border border-x-white/20 overflow-hidden relative">
+      <NewChat
+        open={open}
+        handleOpenNewChat={handleOpenNewChat}
+        selectedChat={selectedChat}
+      />
+      <div className="flex justify-between items-center bg-soft_dark mb-2">
         <div className="px-2 py-4  ">
           <img
             className="rounded-full w-8 "
             src={picture ? picture : noProfile}
           />
         </div>
-        <MenuButton />
+        <div className="flex items-center gap-2 text-white/60">
+          <BsFillChatLeftTextFill
+            className="cursor-pointer"
+            onClick={handleOpenNewChat}
+          />
+          <MenuButton />
+        </div>
       </div>
-      <div className="flex justify-between items-center bg-[#222E35] rounded-sm p-2 mb-2">
+      <div className="flex justify-between items-center bg-soft_dark rounded-sm p-2 mb-2">
         <BiSearchAlt2 className="text-white" />
         <input
           type="text"
           placeholder="Search for a chat"
-          className="w-full ml-6 outline-none text-white  bg-[#222E35]"
+          className="w-full ml-6 outline-none text-white  bg-soft_dark"
         />
       </div>
-      <ul className="  ">
-        {conversations &&
-          conversations.map((chat) => (
-            <Conversation
-              key={chat._id}
-              chat={chat}
-              currentUserId={id}
-              handleSelected={handleSelected}
-              selectedChat={selectedChat}
-            />
-          ))}
+      <ul>
+        {data &&
+          data.map((chat: any) =>
+            chat?.members.map(
+              (user: any) =>
+                user._id !== id && (
+                  <>
+                    <UserCard
+                      key={user._id}
+                      user={user}
+                      chat={chat}
+                      selectedChat={selectedChat}
+                    />
+                  </>
+                )
+            )
+          )}
       </ul>
     </section>
   );

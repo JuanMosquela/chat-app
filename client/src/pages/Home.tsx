@@ -14,9 +14,11 @@ const Home = () => {
 
   return (
     <SocketProvider>
-      <div className="flex min-h-screen  ">
-        <Sidebar conversations={data} />
-        <Chat />
+      <div className=" bg-[#10191F]  ">
+        <div className="container flex flex-row min-h-screen">
+          <Sidebar conversations={data} />
+          <Chat />
+        </div>
       </div>
     </SocketProvider>
   );

@@ -33,10 +33,14 @@ const Chat = () => {
   }, [messages]);
 
   return (
-    <div className="flex w-full flex-col bg-[#10191F]  ">
+    <div
+      className={`flex  flex-col ${
+        currentChat ? "bg-[#10191F]" : "bg-soft_dark"
+      }  w-[70%] `}
+    >
       {currentChat ? (
         <>
-          <div className="bg-[#222E35] flex items-center gap-4 p-4 ">
+          <div className="bg-soft_dark flex items-center gap-4 p-4  ">
             <img
               className="w-8 rounded-full"
               src={currentPictureChat ? currentPictureChat : noPicture}
@@ -51,7 +55,7 @@ const Chat = () => {
                 ref={scroll}
                 key={index}
                 className={`flex   items-center  gap-2  py-2 px-4 rounded-md  mb-2 w-fit text-white ${
-                  id == item.from ? "ml-auto bg-[#005C4B] " : " bg-[#202C33]"
+                  id == item.from ? "ml-auto bg-[#005C4B] " : " bg-soft_dark"
                 }`}
               >
                 <img

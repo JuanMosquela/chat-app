@@ -63,7 +63,7 @@ const SocketProvider = ({ children }: SocketProviderProps) => {
     });
   }, []);
 
-  console.log(messages);
+  console.log(users);
 
   return (
     <SocketContext.Provider
