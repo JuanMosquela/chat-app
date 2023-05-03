@@ -23,7 +23,7 @@ const MessageBox = () => {
     await axios.post(
       import.meta.env.DEV
         ? "http://localhost:5000/api"
-        : "https://chat-app-api-mba6.onrender.com/api",
+        : "https://chat-app-api-mba6.onrender.com/api/message",
       message
     );
   };
