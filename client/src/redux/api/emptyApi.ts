@@ -6,7 +6,7 @@ const emptyApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.DEV
       ? "http://localhost:5000"
-      : "https://chat-app-api-mba6.onrender.com",
+      : "https://chat-app-api-mba6.onrender.com/api",
 
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
