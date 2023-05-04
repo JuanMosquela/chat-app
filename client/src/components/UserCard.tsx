@@ -1,10 +1,8 @@
-import { useEffect, useRef } from "react";
 import User from "../types/user";
-import { format } from "timeago.js";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
 import noProfile from "../assets/user.png";
-import { selectChat, setChat } from "../redux/slices/chat.slice";
+import { setChat } from "../redux/slices/chat.slice";
 import { useCreateConversationMutation } from "../redux/api/conversationApi";
 
 interface UserProps {
@@ -21,10 +19,8 @@ const UserCard = ({ user, chat, selectedChat }: UserProps) => {
 
   const handleFunction = (userId: string) => {
     if (chat?._id) {
-      console.log("voy al chat");
       dispatch(setChat({ user, currentChatId: chat._id }));
     } else {
-      console.log("creo el chat");
       const body = {
         from: id,
         to: userId,
@@ -32,8 +28,6 @@ const UserCard = ({ user, chat, selectedChat }: UserProps) => {
       createConversation(body);
     }
   };
-
-  console.log(data);
 
   return (
     <li
