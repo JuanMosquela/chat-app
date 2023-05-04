@@ -1,17 +1,11 @@
-import { useState, useContext, useEffect, useRef } from "react";
-
-import { RiSendPlane2Fill } from "react-icons/ri";
+import { useContext, useEffect, useRef } from "react";
 import { SocketContext } from "../context/SocketProvider";
-import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
 import MessageBox from "./MessageBox";
 import { selectChat } from "../redux/slices/chat.slice";
 import noPicture from "../assets/user.png";
 import { format } from "timeago.js";
-import { useGetMessagesQuery } from "../redux/api/messagesApi";
 import noProfile from "../assets/user.png";
-import Welcome from "./Welcome";
-import ScrollToBottom from "./ScrollToBottom";
 
 const Chat = () => {
   const { socket, messages } = useContext(SocketContext);

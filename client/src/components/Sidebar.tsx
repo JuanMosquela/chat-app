@@ -1,21 +1,15 @@
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
-import { logout, selectAuth } from "../redux/slices/auth.slice";
-import { googleLogout } from "@react-oauth/google";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/slices/auth.slice";
 import { useState } from "react";
 import noProfile from "../assets/user.png";
 import MenuButton from "./MenuButton";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { BsFillChatLeftTextFill } from "react-icons/bs";
-import Conversation from "./Conversation";
 import NewChat from "./NewChat";
 import { useGetConversationQuery } from "../redux/api/conversationApi";
 import UserCard from "./UserCard";
-
-interface SideBarProps {
-  conversations: any[];
-}
 
 const Sidebar = () => {
   const { picture } = useSelector(selectAuth);
