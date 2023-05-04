@@ -12,6 +12,18 @@ const createConversation = async (req: Request, res: Response) => {
       await User.findById(to),
     ]);
 
+    const existingConversation = await Conversation.findOne({
+      members: { $all: [sender._id, receiver._id] },
+    });
+
+    if (existingConversation) {
+      // Si ya existe una conversación, no se crea una nueva
+      return res.status(400).json({
+        msg: "conversation already exists",
+        conversation: existingConversation,
+      });
+    }
+
     const conversation = new Conversation({
       members: [sender, receiver],
     });

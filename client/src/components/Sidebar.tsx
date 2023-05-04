@@ -68,7 +68,7 @@ const Sidebar = () => {
         {data &&
           data.map((chat: any) =>
             chat?.members.map(
-              (user: any) =>
+              (user: any, index: number) =>
                 user._id !== id && (
                   <>
                     <UserCard

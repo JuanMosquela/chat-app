@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
 import noProfile from "../assets/user.png";
 import { selectChat, setChat } from "../redux/slices/chat.slice";
+import { useCreateConversationMutation } from "../redux/api/conversationApi";
 
 interface UserProps {
   user: User;
@@ -16,20 +17,29 @@ const UserCard = ({ user, chat, selectedChat }: UserProps) => {
   const { id } = useSelector(selectAuth);
   const dispatch = useDispatch();
 
-  const handleFunction = () => {
+  const [createConversation, { data }] = useCreateConversationMutation();
+
+  const handleFunction = (userId: string) => {
     if (chat?._id) {
       console.log("voy al chat");
-      // dispatch(setChat({ user, currentChatId: chat._id }))
+      dispatch(setChat({ user, currentChatId: chat._id }));
     } else {
       console.log("creo el chat");
+      const body = {
+        from: id,
+        to: userId,
+      };
+      createConversation(body);
     }
   };
+
+  console.log(data);
 
   return (
     <li
       key={user._id}
-      onClick={handleFunction}
-      className={`flex items-center px-4 gap-4     rounded-md bg-dark text-white hover:bg-[#222E35] ${
+      onClick={() => handleFunction(user._id)}
+      className={`flex items-center px-4 gap-4 cursor-pointer    rounded-md bg-dark text-white hover:bg-[#222E35] ${
         user._id === selectedChat && "bg-[#2A3942] hover:bg-[#2A3942]"
       }`}
     >

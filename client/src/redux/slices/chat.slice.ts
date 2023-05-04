@@ -5,6 +5,8 @@ interface ChatState {
   currentChat: string;
   currentUserChat: string;
   currentPictureChat: string;
+  panelMode: string;
+  panelOpen: boolean;
 }
 
 function getItem(key: string): string {
@@ -16,6 +18,8 @@ const initialState: ChatState = {
   currentChat: getItem("currentChat"),
   currentUserChat: getItem("currentUserChat"),
   currentPictureChat: getItem("currentPictureChat"),
+  panelMode: getItem("panelMode"),
+  panelOpen: false,
 };
 
 const chatSlice = createSlice({
@@ -40,6 +44,12 @@ const chatSlice = createSlice({
         localStorage.setItem("currentPictureChat", JSON.stringify(picture));
       }
     },
+    openMenu: (state, { payload }) => {
+      state.panelOpen = !state.panelOpen
+      state.panelMode = payload;
+    },
+   
+
     resetState: (state) => {
       state.currentChat = "";
       state.currentUserChat = "";
@@ -50,5 +60,5 @@ const chatSlice = createSlice({
 });
 
 export const selectChat = (state: RootState) => state.chat;
-export const { setChat, resetState } = chatSlice.actions;
+export const { setChat, resetState, openMenu } = chatSlice.actions;
 export default chatSlice.reducer;

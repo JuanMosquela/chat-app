@@ -19,13 +19,6 @@ const NewChat = ({ open, handleOpenNewChat, selectedChat }: OpenProps) => {
   const { id } = useSelector(selectAuth);
   const { data: conversationsData } = useGetConversationQuery(id);
 
-  useEffect(() => {
-    console.log(conversationsData);
-    conversationsData?.map((item) => {
-      console.log(item);
-    });
-  }, []);
-
   return (
     <div
       className={`flex flex-col pr-2 absolute w-full bg-dark top-0 gap-2 bottom-0 duration-200 delay-100 ${
@@ -48,9 +41,9 @@ const NewChat = ({ open, handleOpenNewChat, selectedChat }: OpenProps) => {
         />
       </div>
 
-      <ul>
+      <ul onClick={handleOpenNewChat}>
         {data?.map((user: User) => (
-          <UserCard user={user} selectedChat={selectedChat} />
+          <UserCard key={user._id} user={user} selectedChat={selectedChat} />
         ))}
       </ul>
     </div>
