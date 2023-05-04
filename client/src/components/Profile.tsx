@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BsArrowLeftShort } from "react-icons/bs";
+import { BsArrowLeftShort, BsFillCameraFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
 import { MdModeEditOutline } from "react-icons/md";
@@ -34,13 +34,17 @@ const Profile = ({ open, handleOpen }: ProfileProps) => {
         />
         <h1 className="font-bold text-xl capitalize">profile</h1>
       </div>
-      <figure className="flex justify-center items-center w-full  h-[200px]">
-        <img
-          className="rounded-full h-[180px] object-contain "
-          src={picture}
-          alt={username}
-        />
-      </figure>
+      <div className="flex justify-center items-center w-full h-[300px]">
+        <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full">
+          <img className="w-full object-cover" src={picture} alt={username} />
+          <div className="absolute top-0 left-0 w-full h-full bg-dark cursor-pointer bg-opacity-40 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+            <p className="text-white text-center uppercase">
+              <BsFillCameraFill className="text-4xl mb-2 m-auto" />
+              Cambiar foto <br /> de perfil
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="p-8 space-y-6">
         <h3 className="text-white text-[#008069] ">Your name</h3>
         <div className="flex justify-between ">
