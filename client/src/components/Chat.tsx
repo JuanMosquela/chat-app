@@ -1,11 +1,14 @@
 import { useContext, useEffect, useRef } from "react";
 import { SocketContext } from "../context/SocketProvider";
+import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
 import MessageBox from "./MessageBox";
 import { selectChat } from "../redux/slices/chat.slice";
 import noPicture from "../assets/user.png";
 import { format } from "timeago.js";
+
 import noProfile from "../assets/user.png";
+import Welcome from "./Welcome";
 
 const Chat = () => {
   const { socket, messages } = useContext(SocketContext);
