@@ -11,6 +11,7 @@ import NewChat from "./NewChat";
 import { useGetConversationQuery } from "../redux/api/conversationApi";
 import UserCard from "./UserCard";
 import Profile from "./Profile";
+import Search from "./Search";
 
 const Sidebar = () => {
   const { picture } = useSelector(selectAuth);
@@ -23,6 +24,7 @@ const Sidebar = () => {
     state: false,
     mode: "",
   });
+  const [search, setSearch] = useState("");
 
   const handleSelected = (id: string) => {
     setSelectedChat(id);
@@ -62,20 +64,14 @@ const Sidebar = () => {
           <MenuButton />
         </div>
       </div>
-      <div className="flex justify-between items-center bg-soft_dark rounded-sm p-2 mb-2">
-        <BiSearchAlt2 className="text-white" />
-        <input
-          type="text"
-          placeholder="Search for a chat"
-          className="w-full ml-6 outline-none text-white  bg-soft_dark"
-        />
-      </div>
+      <Search search={search} setSearch={setSearch} />
       <ul>
         {data &&
           data.map((chat: any) =>
             chat?.members.map(
               (user: any, index: number) =>
-                user._id !== id && (
+                user._id !== id &&
+                user.username.toLowerCase().includes(search.toLowerCase()) && (
                   <>
                     <UserCard
                       key={user._id}

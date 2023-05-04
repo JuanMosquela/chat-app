@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
@@ -10,18 +10,16 @@ interface ProfileProps {
 }
 
 const Profile = ({ open, handleOpen }: ProfileProps) => {
-  const { username, picture, email } = useSelector(selectAuth);
+  const { username, picture } = useSelector(selectAuth);
   const [inputValues, setInputValues] = useState({
     username,
     picture,
     description: "Write somethin about you",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });
   };
-
-  console.log(inputValues);
 
   return (
     <div

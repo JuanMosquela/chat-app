@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { useGetUsersQuery } from "../redux/api/userApi";
 import UserCard from "./UserCard";
@@ -7,6 +7,7 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { useGetConversationQuery } from "../redux/api/conversationApi";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
+import Search from "./Search";
 
 interface OpenProps {
   open: any;
@@ -15,9 +16,8 @@ interface OpenProps {
 }
 
 const NewChat = ({ open, handleOpen, selectedChat }: OpenProps) => {
-  const { data, isLoading } = useGetUsersQuery(undefined);
-  const { id } = useSelector(selectAuth);
-  const { data: conversationsData } = useGetConversationQuery(id);
+  const { data } = useGetUsersQuery(undefined);
+  const [search, setSearch] = useState("");
 
   return (
     <div
@@ -32,19 +32,19 @@ const NewChat = ({ open, handleOpen, selectedChat }: OpenProps) => {
         />
         <h1 className="font-bold text-xl capitalize">new chat</h1>
       </div>
-      <div className="flex justify-between items-center bg-soft_dark rounded-sm p-2 mb-2">
-        <BiSearchAlt2 className="text-white" />
-        <input
-          type="text"
-          placeholder="Search for a chat"
-          className="w-full ml-6 outline-none text-white  bg-soft_dark"
-        />
-      </div>
+      <Search search={search} setSearch={setSearch} />
 
       <ul onClick={() => handleOpen(false, "chat")}>
-        {data?.map((user: User) => (
-          <UserCard key={user._id} user={user} selectedChat={selectedChat} />
-        ))}
+        {data?.map(
+          (user: User) =>
+            user.username.toLowerCase().includes(search.toLowerCase()) && (
+              <UserCard
+                key={user._id}
+                user={user}
+                selectedChat={selectedChat}
+              />
+            )
+        )}
       </ul>
     </div>
   );
