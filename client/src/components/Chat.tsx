@@ -13,8 +13,14 @@ import { selectTheme } from "../redux/slices/theme.slice";
 
 const Chat = () => {
   const { socket, messages } = useContext(SocketContext);
-  const { headingColor, textColor, backgroundColor, messageMe, messageAll } =
-    useSelector(selectTheme);
+  const {
+    theme,
+    headingColor,
+    textColor,
+    backgroundColor,
+    messageMe,
+    messageAll,
+  } = useSelector(selectTheme);
 
   const { currentChat, currentUserChat, currentPictureChat } =
     useSelector(selectChat);
@@ -53,7 +59,11 @@ const Chat = () => {
             <ThemeColor />
           </div>
 
-          <ul className="p-4 h-full overflow-y-scroll">
+          <ul
+            className={` p-4 h-full overflow-y-scroll ${
+              theme == "dark" ? "#F0F2F5" : "bg-[#EFEAE2]"
+            }`}
+          >
             {messages?.map((item: any, index: number) => (
               <li
                 ref={scroll}
