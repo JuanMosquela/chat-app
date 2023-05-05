@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
 import Robot from "../assets/robot.gif";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
+import { selectTheme } from "../redux/slices/theme.slice";
 export default function Welcome() {
   const { username } = useSelector(selectAuth);
+  const { theme, headingColor } = useSelector(selectTheme);
 
   return (
-    <div className="flex-grow flex items-center justify-center   text-white">
+    <div
+      className={`flex-grow flex items-center justify-center  ${
+        theme == "dark" ? `text-white ${headingColor} ` : "text-dark bg-gray"
+      }`}
+    >
       <div className="flex  flex-col justify-center items-center">
         <img className="h-[20rem]" src={Robot} alt="" />
         <h1 className="text-4xl mb-2">

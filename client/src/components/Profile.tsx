@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsArrowLeftShort, BsFillCameraFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
@@ -19,6 +19,16 @@ const Profile = ({ open, handleOpen }: ProfileProps) => {
     picture,
     description: "Write somethin about you",
   });
+
+  //   useEffect(() => {
+  //     const img = document.querySelector("img");
+  //     if (img) {
+  //       setTimeout(() => {
+  //         img.classList.remove("scale-0");
+  //         img.classList.add("scale-100");
+  //       }, 3000);
+  //     }
+  //   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });
@@ -41,7 +51,13 @@ const Profile = ({ open, handleOpen }: ProfileProps) => {
       </div>
       <div className="flex justify-center items-center w-full h-[300px]">
         <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full">
-          <img className="w-full object-cover" src={picture} alt={username} />
+          <img
+            className={`${
+              open.state ? "scale-100" : "scale-0"
+            } w-full object-cover transform  transition-transform duration-4000 delay-3000`}
+            src={picture}
+            alt={username}
+          />
           <div className="absolute top-0 left-0 w-full h-full bg-dark cursor-pointer bg-opacity-40 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300">
             <p className="text-white text-center uppercase">
               <BsFillCameraFill className="text-4xl mb-2 m-auto" />
