@@ -6,20 +6,22 @@ import MessageBox from "./MessageBox";
 import { selectChat } from "../redux/slices/chat.slice";
 import noPicture from "../assets/user.png";
 import { format } from "timeago.js";
-
 import noProfile from "../assets/user.png";
 import Welcome from "./Welcome";
+import ThemeColor from "./ThemeColor";
+import { selectTheme } from "../redux/slices/theme.slice";
 
 const Chat = () => {
   const { socket, messages } = useContext(SocketContext);
+  const { headingColor, textColor, backgroundColor, messageMe, messageAll } =
+    useSelector(selectTheme);
 
   const { currentChat, currentUserChat, currentPictureChat } =
     useSelector(selectChat);
   const { id } = useSelector(selectAuth);
   const scroll = useRef<any>();
-  // const { data } = useGetMessagesQuery(currentChat);
 
-  // console.log(data);
+  console.log(messageMe, messageAll);
 
   useEffect(() => {
     socket?.on("recive_message", (message) => console.log(message));
@@ -31,19 +33,24 @@ const Chat = () => {
 
   return (
     <div
-      className={`flex  flex-col ${
-        currentChat ? "bg-[#10191F]" : "bg-soft_dark"
+      className={`flex   flex-col ${
+        currentChat ? `${backgroundColor}` : "bg-soft_dark"
       }  w-[70%] `}
     >
       {currentChat ? (
         <>
-          <div className="bg-soft_dark flex items-center gap-4 p-4  ">
-            <img
-              className="w-8 rounded-full"
-              src={currentPictureChat ? currentPictureChat : noPicture}
-              alt=""
-            />
-            <h4 className="text-white">{currentUserChat}</h4>
+          <div
+            className={`${headingColor} flex justify-between items-center  h-[50px] px-4  `}
+          >
+            <div className="flex gap-4">
+              <img
+                className="w-8 rounded-full"
+                src={currentPictureChat ? currentPictureChat : noPicture}
+                alt=""
+              />
+              <h4 className={`${textColor}`}>{currentUserChat}</h4>
+            </div>
+            <ThemeColor />
           </div>
 
           <ul className="p-4 h-[800px] overflow-y-scroll">
@@ -51,8 +58,8 @@ const Chat = () => {
               <li
                 ref={scroll}
                 key={index}
-                className={`flex   items-center  gap-2  py-2 px-4 rounded-md  mb-2 w-fit text-white ${
-                  id == item.from ? "ml-auto bg-[#005C4B] " : " bg-soft_dark"
+                className={`flex   items-center  gap-2  py-2 px-4 rounded-md  mb-2 w-fit ${textColor} ${
+                  id == item.from ? `ml-auto ${messageMe}` : `${messageAll}`
                 }`}
               >
                 <img

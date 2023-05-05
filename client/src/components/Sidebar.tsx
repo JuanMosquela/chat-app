@@ -12,9 +12,12 @@ import { useGetConversationQuery } from "../redux/api/conversationApi";
 import UserCard from "./UserCard";
 import Profile from "./Profile";
 import Search from "./Search";
+import { selectTheme } from "../redux/slices/theme.slice";
 
 const Sidebar = () => {
   const { picture } = useSelector(selectAuth);
+  const { theme, backgroundColor, headingColor, textColor } =
+    useSelector(selectTheme);
   const [selectedChat, setSelectedChat] = useState<string | undefined>(
     undefined
   );
@@ -39,24 +42,25 @@ const Sidebar = () => {
   };
 
   return (
-    <section className=" w-[30%] bg-[#111B21] pr-2 border border-x-white/20 overflow-hidden relative">
+    <section
+      className={`${backgroundColor} w-[30%]   border border-x-white/20 overflow-hidden relative`}
+    >
       <Profile open={open} handleOpen={handleOpen} />
       <NewChat
         open={open}
         handleOpen={handleOpen}
         selectedChat={selectedChat}
       />
-      <div className="flex justify-between items-center bg-soft_dark mb-2">
-        <div
-          className="px-2 py-4  "
-          onClick={() => handleOpen(true, "profile")}
-        >
+      <div
+        className={`flex justify-between items-center pl-2 ${headingColor} mb-2 h-[50px]`}
+      >
+        <div className="  " onClick={() => handleOpen(true, "profile")}>
           <img
             className="rounded-full w-8 "
             src={picture ? picture : noProfile}
           />
         </div>
-        <div className="flex items-center gap-2 text-white/60">
+        <div className={`flex items-center gap-2 ${textColor}`}>
           <BsFillChatLeftTextFill
             className="cursor-pointer"
             onClick={() => handleOpen(true, "chat")}

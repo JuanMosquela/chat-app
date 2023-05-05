@@ -8,9 +8,11 @@ import { useSelector } from "react-redux";
 import { selectChat } from "../redux/slices/chat.slice";
 import { selectAuth } from "../redux/slices/auth.slice";
 import axios from "axios";
+import { selectTheme } from "../redux/slices/theme.slice";
 
 const MessageBox = () => {
   const { socket, messages, setMessages } = useContext(SocketContext);
+  const { headingColor, textColor } = useSelector(selectTheme);
   const { id, picture } = useSelector(selectAuth);
   const { currentChat } = useSelector(selectChat);
   const [newMessage, setNewMessage] = useState("");
@@ -47,9 +49,9 @@ const MessageBox = () => {
   }
 
   return (
-    <div className="bg-[#222E35]  px-6 py-2 rounded-md text-white">
-      <div className="flex  w-full items-center gap-4">
-        <FiPaperclip className="text-2xl" />
+    <div className={`${headingColor}  px-6 py-2 rounded-md text-white`}>
+      <div className={`flex  w-full items-center gap-4 ${textColor}`}>
+        <FiPaperclip className="text-2xl " />
         <InputEmoji
           value={newMessage}
           onChange={handleChange}
@@ -62,7 +64,7 @@ const MessageBox = () => {
           className="w-[50px] h-[50px] flex justify-center items-center rounded-md"
         >
           <AiOutlineSend
-            className="text-xl text-white"
+            className={`text-xl ${textColor}`}
             onClick={handleOnEnter}
           />
         </button>

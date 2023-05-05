@@ -1,4 +1,6 @@
 import { BiSearchAlt2 } from "react-icons/bi";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../redux/slices/theme.slice";
 
 interface SearchProps {
   search: string;
@@ -6,17 +8,20 @@ interface SearchProps {
 }
 
 const Search = ({ search, setSearch }: SearchProps) => {
+  const { headingColor, textColor } = useSelector(selectTheme);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
   return (
-    <div className="flex justify-between items-center bg-soft_dark rounded-sm p-2 mb-2">
-      <BiSearchAlt2 className="text-white" />
+    <div
+      className={`flex mx-4 justify-between items-center ${headingColor} rounded-sm p-2 mb-2 rounded-xl`}
+    >
+      <BiSearchAlt2 className={`${textColor}`} />
       <input
         type="text"
         placeholder="Search for a chat"
-        className="w-full ml-6 outline-none text-white  bg-soft_dark"
+        className={`w-full ml-6 outline-none ${textColor}  ${headingColor}`}
         onChange={handleChange}
         value={search}
       />

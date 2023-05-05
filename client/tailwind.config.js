@@ -4,13 +4,20 @@ export default {
   theme: {
     colors: {
       red: "#ff0033",
-      gray: "#F5F5F5",
-      letter: "#9C9782",
-      blue: "#98CAFB",
+      light_heading: "#F0F2F5",
+      dark_heading: "#222E35",
+      gray: "#F0F2F5",
       dark: "#111B21",
-      soft_dark: "#222E35",
+      background_dark: "#111B21",
+      background_light: "#DFDFDD",
       white: "#FFF",
-      empty_bg: "#222E35",
+      blue: "#98CAFB",
+      soft_dark: "#222E35",
+      soft_white: "#F0F2F5",
+      light_color_msg_me: "#D9FDD3",
+      light_color_msg_all: "#FFF",
+      dark_color_msg_me: "#005C4B",
+      dark_color_msg_all: "#222E35",
     },
     extend: {
       container: {

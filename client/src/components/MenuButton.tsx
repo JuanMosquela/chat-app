@@ -10,13 +10,15 @@ import Stack from "@mui/material/Stack";
 import { CiMenuKebab } from "react-icons/ci";
 import { googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/auth.slice";
 import { SocketContext } from "../context/SocketProvider";
 import { resetState } from "../redux/slices/chat.slice";
+import { selectTheme } from "../redux/slices/theme.slice";
 
 export default function MenuButton() {
   const { socket } = React.useContext(SocketContext);
+  const { textColor, backgroundColor } = useSelector(selectTheme);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
@@ -75,7 +77,7 @@ export default function MenuButton() {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          <CiMenuKebab className="text-white " />
+          <CiMenuKebab className={` ${textColor}`} />
         </Button>
         <Popper
           open={open}
@@ -96,7 +98,6 @@ export default function MenuButton() {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList
-                    className="bg-[#222E35]  text-white"
                     autoFocusItem={open}
                     id="composition-menu"
                     aria-labelledby="composition-button"
