@@ -13,6 +13,7 @@ import UserCard from "./UserCard";
 import Profile from "./Profile";
 import Search from "./Search";
 import { selectTheme } from "../redux/slices/theme.slice";
+import ThemeColor from "./ThemeColor";
 
 const Sidebar = () => {
   const { picture } = useSelector(selectAuth);
@@ -52,20 +53,21 @@ const Sidebar = () => {
         selectedChat={selectedChat}
       />
       <div
-        className={`flex justify-between items-center pl-2 ${headingColor} mb-2 h-[60px]`}
+        className={`flex justify-between items-center  ${headingColor} mb-2 h-[60px] px-6`}
       >
-        <div className="  " onClick={() => handleOpen(true, "profile")}>
+        <figure className="  " onClick={() => handleOpen(true, "profile")}>
           <img
             className="rounded-full w-8 "
             src={picture ? picture : noProfile}
           />
-        </div>
-        <div className={`flex items-center gap-2 ${textColor}`}>
+        </figure>
+        <div className={`flex items-center justify-center ${textColor} `}>
           <BsFillChatLeftTextFill
             className="cursor-pointer"
             onClick={() => handleOpen(true, "chat")}
           />
           <MenuButton />
+          <ThemeColor />
         </div>
       </div>
       <Search search={search} setSearch={setSearch} />

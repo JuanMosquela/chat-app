@@ -10,6 +10,7 @@ import noProfile from "../assets/user.png";
 import Welcome from "./Welcome";
 import ThemeColor from "./ThemeColor";
 import { selectTheme } from "../redux/slices/theme.slice";
+import MenuButton from "./MenuButton";
 
 const Chat = () => {
   const { socket, messages } = useContext(SocketContext);
@@ -56,11 +57,11 @@ const Chat = () => {
               />
               <h4 className={`${textColor}`}>{currentUserChat}</h4>
             </div>
-            <ThemeColor />
+            <MenuButton />
           </div>
 
           <ul
-            className={` p-4 h-full overflow-y-scroll ${
+            className={` p-4 h-[800px] overflow-y-scroll ${
               theme == "dark" ? "#F0F2F5" : "bg-[#EFEAE2]"
             }`}
           >

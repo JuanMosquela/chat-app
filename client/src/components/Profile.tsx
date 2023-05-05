@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { BsArrowLeftShort, BsFillCameraFill } from "react-icons/bs";
+import { AiOutlineCheck } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/slices/auth.slice";
 import { MdModeEditOutline } from "react-icons/md";
 import { selectTheme } from "../redux/slices/theme.slice";
+import { useEditUserInfoMutation, useGetUserQuery } from "../redux/api/userApi";
 
 interface ProfileProps {
   open: any;
@@ -11,27 +13,68 @@ interface ProfileProps {
 }
 
 const Profile = ({ open, handleOpen }: ProfileProps) => {
-  const { username, picture } = useSelector(selectAuth);
-  const { headingColor, textColor, backgroundColor, messageMe, messageAll } =
-    useSelector(selectTheme);
+  const { id } = useSelector(selectAuth);
+  const { data, isSuccess } = useGetUserQuery(id);
+  const [editUserInfo] = useEditUserInfoMutation();
+
+  const { headingColor, textColor, backgroundColor } = useSelector(selectTheme);
+
+  const [readOnly, setReadOnly] = useState(true);
+  const [editingInput, setEditingInput] = useState("");
+
   const [inputValues, setInputValues] = useState({
-    username,
-    picture,
-    description: "Write somethin about you",
+    username: data?.username,
+    description: data?.description,
   });
 
-  //   useEffect(() => {
-  //     const img = document.querySelector("img");
-  //     if (img) {
-  //       setTimeout(() => {
-  //         img.classList.remove("scale-0");
-  //         img.classList.add("scale-100");
-  //       }, 3000);
-  //     }
-  //   }, []);
+  const [file, setFile] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleReadInputs = (value: string) => {
+    setReadOnly(false);
+    setEditingInput(value);
+  };
+
+  const handleSubmitInputs = (e: any) => {
+    try {
+      const formData = new FormData();
+
+      console.log(inputValues);
+
+      for (const value of Object.entries(inputValues)) {
+        console.log(value[0], value[1]);
+        formData.append(value[0], value[1]);
+      }
+
+      if (file) {
+        formData.append("picture", file);
+      }
+
+      editUserInfo(formData);
+    } catch (error) {
+      console.log(error);
+    }
+    setReadOnly(true);
+  };
+
+  useEffect(() => {
+    if (data) {
+      setInputValues({
+        username: data?.username,
+
+        description: data?.description || "Write somethin about you",
+      });
+    }
+  }, [isSuccess]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });
+  };
+
+  const handleFile = (e: any) => {
+    const file = e.target.files[0];
+    setFile(file);
   };
 
   return (
@@ -50,44 +93,75 @@ const Profile = ({ open, handleOpen }: ProfileProps) => {
         <h1 className={`font-bold text-xl capitalize`}>profile</h1>
       </div>
       <div className="flex justify-center items-center w-full h-[300px]">
-        <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full">
+        <figure className="relative w-[280px] h-[280px] ">
           <img
-            className={`${
-              open.state ? "scale-100" : "scale-0"
-            } w-full object-cover transform  transition-transform duration-4000 delay-3000`}
-            src={picture}
-            alt={username}
+            className={`
+              
+             w-[280px] h-[280px] object- transform rounded-full  transition-transform duration-4000 delay-3000`}
+            src={data?.picture}
+            alt={data?.username}
           />
-          <div className="absolute top-0 left-0 w-full h-full bg-dark cursor-pointer bg-opacity-40 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-            <p className="text-white text-center uppercase">
-              <BsFillCameraFill className="text-4xl mb-2 m-auto" />
-              Cambiar foto <br /> de perfil
-            </p>
+          <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-dark  bg-opacity-40  opacity-0 hover:opacity-100 transition-opacity duration-300">
+            <div className="relative h-[80px] w-[240px] flex justify-center items-center cursor-pointer">
+              <input
+                type="file"
+                onChange={(e) => {
+                  handleFile(e);
+                  handleSubmitInputs(e);
+                }}
+                className="text-white text-center uppercase relative z-20 h-full w-full  "
+              />
+              <button className="absolute top-0 left-0 w-full ">
+                <BsFillCameraFill className="text-4xl mb-2 m-auto" />
+                <p>
+                  Cambiar foto <br /> de perfil
+                </p>{" "}
+              </button>
+            </div>
           </div>
-        </div>
+        </figure>
       </div>
       <div className="p-8 space-y-6">
         <h3 className=" text-[#008069] ">Your name</h3>
-        <div className={` ${textColor} flex justify-between `}>
+        <div className={` ${textColor} flex justify-between gap-2 `}>
           <input
             type="text"
             name="username"
-            className={`${backgroundColor} w-full outline-none`}
+            readOnly={readOnly}
+            autoFocus={!readOnly}
+            className={`${backgroundColor} p-1 w-full outline-none  ${
+              !readOnly &&
+              editingInput == "username" &&
+              "border-b-2 border-b-[#23C861]"
+            }`}
             value={inputValues.username}
             onChange={handleChange}
           />
-          <MdModeEditOutline />
+          {!readOnly && editingInput == "username" ? (
+            <AiOutlineCheck onClick={handleSubmitInputs} />
+          ) : (
+            <MdModeEditOutline onClick={() => handleReadInputs("username")} />
+          )}
         </div>
         <h3 className=" text-[#008069] ">Info</h3>
-        <div className={` ${textColor} flex justify-between `}>
-          <input
-            type="text"
+        <div className={` ${textColor} flex justify-between gap-2 `}>
+          <textarea
             name="description"
-            className={`${backgroundColor} w-full outline-none `}
+            className={`${backgroundColor} p-1 w-full outline-none resize-none ${
+              !readOnly &&
+              editingInput == "description" &&
+              "border-b-2 border-b-[#23C861]"
+            } `}
             value={inputValues.description}
             onChange={handleChange}
           />
-          <MdModeEditOutline />
+          {!readOnly && editingInput == "description" ? (
+            <AiOutlineCheck onClick={handleSubmitInputs} />
+          ) : (
+            <MdModeEditOutline
+              onClick={() => handleReadInputs("description")}
+            />
+          )}
         </div>
       </div>
     </div>

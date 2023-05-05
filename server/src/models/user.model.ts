@@ -25,6 +25,9 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    description: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

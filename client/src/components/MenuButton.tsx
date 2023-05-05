@@ -67,7 +67,7 @@ export default function MenuButton() {
   }, [open]);
 
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row">
       <div>
         <Button
           ref={anchorRef}
@@ -77,7 +77,7 @@ export default function MenuButton() {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          <CiMenuKebab className={` ${textColor}`} />
+          <CiMenuKebab className={`${textColor}`} />
         </Button>
         <Popper
           open={open}

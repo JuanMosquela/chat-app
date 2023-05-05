@@ -37,7 +37,7 @@ const UserCard = ({ user, chat, selectedChat }: UserProps) => {
       key={user._id}
       onClick={() => handleFunction(user._id)}
       className={`flex items-center px-4 gap-4 cursor-pointer    rounded-md ${backgroundColor} ${textColor} ${
-        theme == "light" ? `hover:${headingColor}` : "hover:bg-[#222E35]"
+        theme == "light" ? `hover:bg-gray` : "hover:bg-[#222E35]"
       }  ${user._id === selectedChat && "bg-[#2A3942] hover:bg-[#2A3942]"}`}
     >
       <img
@@ -51,7 +51,11 @@ const UserCard = ({ user, chat, selectedChat }: UserProps) => {
           <p className={`${textColor}`}>{user.email}</p>
         </div>
 
-        <hr className="w-full text-soft_dark" />
+        <hr
+          className={`w-full ${
+            theme == "light" ? "text-gray" : "text-soft_dark"
+          } `}
+        />
       </div>
     </li>
   );
