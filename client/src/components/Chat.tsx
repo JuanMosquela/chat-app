@@ -40,7 +40,7 @@ const Chat = () => {
       {currentChat ? (
         <>
           <div
-            className={`${headingColor} flex justify-between items-center  h-[50px] px-4  `}
+            className={`${headingColor} flex justify-between items-center  h-[60px] p-4  `}
           >
             <div className="flex gap-4">
               <img
@@ -53,7 +53,7 @@ const Chat = () => {
             <ThemeColor />
           </div>
 
-          <ul className="p-4 h-[800px] overflow-y-scroll">
+          <ul className="p-4 h-full overflow-y-scroll">
             {messages?.map((item: any, index: number) => (
               <li
                 ref={scroll}

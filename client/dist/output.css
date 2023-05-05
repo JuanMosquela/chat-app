@@ -520,8 +520,8 @@ video {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  padding-right: 2rem;
-  padding-left: 2rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
 
 @media (min-width: 640px) {
@@ -685,6 +685,18 @@ video {
 
 .h-full {
   height: 100%;
+}
+
+.h-\[900px\] {
+  height: 900px;
+}
+
+.h-\[840px\] {
+  height: 840px;
+}
+
+.h-\[820px\] {
+  height: 820px;
 }
 
 .min-h-\[100vh\] {
@@ -1099,10 +1111,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-white\/70 {
-  color: rgb(255 255 255 / 0.7);
 }
 
 .opacity-0 {

@@ -52,7 +52,7 @@ const Sidebar = () => {
         selectedChat={selectedChat}
       />
       <div
-        className={`flex justify-between items-center pl-2 ${headingColor} mb-2 h-[50px]`}
+        className={`flex justify-between items-center pl-2 ${headingColor} mb-2 h-[60px]`}
       >
         <div className="  " onClick={() => handleOpen(true, "profile")}>
           <img
